@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.project.environments.DBConnection;
@@ -12,6 +13,8 @@ import com.project.models.Gestor;
 
 public class DBGestor {
 	DBConnection connection = new DBConnection();
+
+	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
 
 	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 
@@ -63,7 +66,7 @@ public class DBGestor {
 			}
 
 			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 2);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 2, preocupado);
 			} else {
 				for (int x = 0; x < gestores.size(); x++) {
 					System.out.println("Datos del gestor " + gestores.get(x).getId_gestor());
@@ -72,7 +75,7 @@ public class DBGestor {
 					System.out.println("DNI: " + gestores.get(x).getDni());
 					System.out.println("Usuario: " + gestores.get(x).getUsuario());
 					System.out.println("Contraseña: " + gestores.get(x).getPassword());
-					System.out.println("Correo: " + gestores.get(x).getCorreo()+"\n");
+					System.out.println("Correo: " + gestores.get(x).getCorreo() + "\n");
 				}
 
 			}
@@ -102,7 +105,7 @@ public class DBGestor {
 		}
 
 	}
-	
+
 	public boolean comprobarGestor(Gestor gestor) {
 		boolean existeGestor = false;
 		try {
@@ -118,12 +121,10 @@ public class DBGestor {
 			}
 
 			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < gestores.size(); x++) {
-					JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-					existeGestor = true;
-				}
+				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+				existeGestor = true;
 
 			}
 		} catch (SQLException e) {
@@ -131,80 +132,86 @@ public class DBGestor {
 		}
 		return existeGestor;
 	}
-	
-	public void updateNombreGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET nombre=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateApellidoGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET apellido=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateDniGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET dni=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateUsuarioGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET usuario=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updatePasswordGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET password=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateCorreoGestor(Gestor gestor){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE gestor SET correo=? WHERE id=?");
-            statement.setString(1, gestor.getActualizar());
-            statement.setInt(2, gestor.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void borrarGestor(Gestor gestor){
-        try {
-            PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM gestor WHERE id=?");
-            statement.setInt(1, gestor.getId_gestor());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+	public void updateNombreGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET nombre=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateApellidoGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET apellido=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateDniGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET dni=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateUsuarioGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET usuario=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updatePasswordGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET password=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateCorreoGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE gestor SET correo=? WHERE id=?");
+			statement.setString(1, gestor.getActualizar());
+			statement.setInt(2, gestor.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void borrarGestor(Gestor gestor) {
+		try {
+			PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM gestor WHERE id=?");
+			statement.setInt(1, gestor.getId_gestor());
+			statement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

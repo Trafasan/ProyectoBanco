@@ -10,48 +10,46 @@ public class GestorUpdateController {
 
 	public static void switchUpdateGestor(Gestor comprobacionGestor) {
 		DBGestor dbGestor = new DBGestor();
-		String opcionAct;
+		String update;
 		try {
-			opcionAct = JOptionPane.showInputDialog(null, "Seleccione dato que quiere actualizar: ", "ACTUALIZACIÓN DEL GESTOR "+comprobacionGestor.getId_gestor(),
+			update = JOptionPane.showInputDialog(null, "Seleccione el dato que quiere actualizar: ", "ACTUALIZACIÓN DEL GESTOR "+comprobacionGestor.getId_gestor(),
 					JOptionPane.PLAIN_MESSAGE, null,
 					new Object[] { "Nombre", "Apellido(s)", "DNI", "Usuario", "Contraseña", "Correo"}, null).toString();
 		} catch (Exception e) {
-			opcionAct = "Volver atrás";
+			update = "Volver atrás";
 		}
 
-		switch (opcionAct) {
-		case "Nombre":
+		switch (update) {
+		case "Nombre" -> {
 			dbGestor.updateNombreGestor(UIGestor.updateNombreGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "Nombre actualizado correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "Apellido(s)":
+		}
+		case "Apellido(s)" -> {
 			dbGestor.updateApellidoGestor(UIGestor.updateApellidoGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "Apellido(s) actualizado(s) correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "DNI":
+		}
+		case "DNI" -> {
 			dbGestor.updateDniGestor(UIGestor.updateDniGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "DNI actualizado correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "Usuario":
+		}
+		case "Usuario" -> {
 			dbGestor.updateUsuarioGestor(UIGestor.updateUsuarioGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "Contraseña":
+		}
+		case "Contraseña" -> {
 			dbGestor.updatePasswordGestor(UIGestor.updateUsuarioGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "Correo":
+		}
+		case "Correo" -> {
 			dbGestor.updateCorreoGestor(UIGestor.updateCorreoGestor(comprobacionGestor));
 			JOptionPane.showMessageDialog(null, "Correo actualizado correctamente");
 			switchUpdateGestor(comprobacionGestor);
-			break;
-		case "Volver atrás":
-			break;
+		}
 		}
 	}
 }

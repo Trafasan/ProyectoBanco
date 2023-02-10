@@ -14,16 +14,16 @@ public class LoginController {
 	public static void switchLogin() {
 		DBLogin dbLogin = new DBLogin();
 		ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
-		String nuevaOpcion;
+		String accion;
 		try {
-			nuevaOpcion = JOptionPane.showInputDialog(null, "Seleccione su tipo de cuenta: ", "MENÚ LOGIN",
+			accion = JOptionPane.showInputDialog(null, "Seleccione su tipo de cuenta: ", "MENÚ LOGIN",
 					JOptionPane.PLAIN_MESSAGE, null, new Object[] { "Gestor", "Cliente" }, null).toString();
 		} catch (Exception e) {
-			nuevaOpcion = "Volver atrás";
+			accion = "Volver atrás";
 		}
 
-		switch (nuevaOpcion) {
-		case "Gestor":
+		switch (accion) {
+		case "Gestor" -> {
 			Gestor comprobarUsuarioG = UILogin.comprobarUsuarioG();
 			boolean existeUsuarioG = dbLogin.comprobarUsuarioG(comprobarUsuarioG);
 			if (existeUsuarioG == true) {
@@ -41,9 +41,9 @@ public class LoginController {
 					switchLogin();
 				}
 			}
-			else {switchLogin();}
-			break;
-		case "Cliente":
+			else switchLogin();
+		}
+		case "Cliente" -> {
 			Cliente comprobarUsuarioC = UILogin.comprobarUsuarioC();
 			boolean existeUsuarioC = dbLogin.comprobarUsuarioC(comprobarUsuarioC);
 			if (existeUsuarioC == true) {
@@ -60,9 +60,8 @@ public class LoginController {
 				}
 			}
 			MainMenu.opciones();
-			break;
-		case "Volver atrás":
-			MainMenu.opciones();
+		}
+		case "Volver atrás" -> MainMenu.opciones();
 		}
 	}
 }

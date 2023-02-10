@@ -1,5 +1,6 @@
 package com.project.controllers;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.project.databases.DBMensaje;
@@ -11,25 +12,26 @@ public class MensajeController {
 
 	public static void switchMensaje() {
 		DBMensaje dbMensaje = new DBMensaje();
-		String nuevaOpcion;
+		
+		String accion;
 		try {
-			nuevaOpcion = JOptionPane.showInputDialog(null, "Inserte una opción: ", "MENÚ MENSAJES",
+			accion = JOptionPane.showInputDialog(null, "Seleccione una opción: ", "MENÚ MENSAJES",
 					JOptionPane.PLAIN_MESSAGE, null, new Object[] { "Obtención de un mensaje",
 							"Obtención de todos los mensajes", "Envío de un mensaje" }, null).toString();
 		} catch (Exception e) {
-			nuevaOpcion = "Volver atrás";
+			accion = "Volver atrás";
 		}
 
-		switch (nuevaOpcion) {
-		case "Obtención de un mensaje":
+		switch (accion) {
+		case "Obtención de un mensaje" -> {
 			dbMensaje.leerUnMensaje(UIMensaje.obtencionMensaje());
 			switchMensaje();
-			break;
-		case "Obtención de todos los mensajes":
+		}
+		case "Obtención de todos los mensajes" -> {
 			dbMensaje.leerMensajes();
 			switchMensaje();
-			break;
-		case "Envío de un mensaje":
+		}
+		case "Envío de un mensaje" -> {
 			boolean existeId_origen, existeId_destino;
 			Gestor comprobacionId_origen, comprobacionId_destino;
 			int id_origen, id_destino;
@@ -47,15 +49,14 @@ public class MensajeController {
 				}while(existeId_destino == false);
 				
 				if(id_origen == id_destino) {
-					JOptionPane.showMessageDialog(null, "El gestor destinatario no puede ser el gestor remitente", "ERROR", 0);
+					JOptionPane.showMessageDialog(null, "El gestor destinatario no puede ser el gestor remitente", "ERROR", 0, new ImageIcon("src/images/preocupado.png"));
 				}
 			}while(id_origen == id_destino);
 			dbMensaje.enviarMensaje(UIMensaje.envíoMensaje(comprobacionId_origen, comprobacionId_destino));
 			JOptionPane.showMessageDialog(null, "Envío realizado correctamente");
 			switchMensaje();
-			break;
-		case "Volver atrás":
-			MainMenu.opciones();
+		}
+		case "Volver atrás" -> MainMenu.opciones();
 		}
 	}
 }

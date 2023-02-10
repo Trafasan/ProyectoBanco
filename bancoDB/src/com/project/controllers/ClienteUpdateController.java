@@ -11,17 +11,17 @@ public class ClienteUpdateController {
 
 	public static void switchUpdateCliente(Cliente comprobacionCliente) {
 		DBCliente dbCliente = new DBCliente();
-		String opcionAct;
+		String update;
 		try {
-			opcionAct = JOptionPane.showInputDialog(null, "Seleccione dato que quiere actualizar: ", "ACTUALIZACIÓN DEL CLIENTE "+comprobacionCliente.getId_cliente(),
+			update = JOptionPane.showInputDialog(null, "Seleccione el dato que quiere actualizar: ", "ACTUALIZACIÓN DEL CLIENTE "+comprobacionCliente.getId_cliente(),
 					JOptionPane.PLAIN_MESSAGE, null,
 					new Object[] {"ID del gestor", "Nombre", "Apellido(s)", "DNI", "Usuario", "Contraseña", "Correo", "Saldo"}, null).toString();
 		} catch (Exception e) {
-			opcionAct = "Volver atrás";
+			update = "Volver atrás";
 		}
 
-		switch (opcionAct) {
-		case "ID del gestor":
+		switch (update) {
+		case "ID del gestor" -> {
 			boolean existeId_gestor;
 			Gestor comprobacionId_gestor;
 			do{
@@ -31,44 +31,42 @@ public class ClienteUpdateController {
 			dbCliente.updateId_gestorCliente(UICliente.updateId_gestorCliente(comprobacionCliente, comprobacionId_gestor));
 			JOptionPane.showMessageDialog(null, "ID del gestor actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Nombre":
+		}
+		case "Nombre" -> {
 			dbCliente.updateNombreCliente(UICliente.updateNombreCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Nombre actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Apellido(s)":
+		}
+		case "Apellido(s)" -> {
 			dbCliente.updateApellidoCliente(UICliente.updateApellidoCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Apellido(s) actualizado(s) correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "DNI":
+		}
+		case "DNI" -> {
 			dbCliente.updateDniCliente(UICliente.updateDniCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "DNI actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Usuario":
+		}
+		case "Usuario" -> {
 			dbCliente.updateUsuarioCliente(UICliente.updateUsuarioCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Contraseña":
+		}
+		case "Contraseña" -> {
 			dbCliente.updatePasswordCliente(UICliente.updateUsuarioCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Correo":
+		}
+		case "Correo" -> {
 			dbCliente.updateCorreoCliente(UICliente.updateCorreoCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Correo actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Saldo":
+		}
+		case "Saldo" -> {
 			dbCliente.updateSaldoCliente(UICliente.updateSaldoCliente(comprobacionCliente));
 			JOptionPane.showMessageDialog(null, "Saldo actualizado correctamente");
 			switchUpdateCliente(comprobacionCliente);
-			break;
-		case "Volver atrás":
-			break;
+		}
 		}
 	}
 }

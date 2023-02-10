@@ -28,19 +28,19 @@ public class RegistroController {
 	public static void switchRegistro() {
 		DBRegistro dbRegistro = new DBRegistro();
 		ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
-		String nuevaOpcion;
+		String accion;
 		try {
-			nuevaOpcion = JOptionPane.showInputDialog(null, "Seleccione el tipo de cuenta que quiere crear: ", "MENÚ REGISTRO",
+			accion = JOptionPane.showInputDialog(null, "Seleccione el tipo de cuenta que quiere crear: ", "MENÚ REGISTRO",
 					JOptionPane.PLAIN_MESSAGE, null, new Object[] { "Gestor", "Cliente" }, null).toString();
 		} catch (Exception e) {
-			nuevaOpcion = "Volver atrás";
+			accion = "Volver atrás";
 		}
 
-		switch (nuevaOpcion) {
-		case "Gestor":
+		switch (accion) {
+		case "Gestor" -> {
 			Gestor comprobarUsuarioG = UIRegistro.comprobarUsuarioG();
 			boolean existeUsuarioG = dbRegistro.comprobarUsuarioG(comprobarUsuarioG);
-			if (existeUsuarioG == false) {
+			if (!existeUsuarioG) {
 				String usuario = comprobarUsuarioG.getActualizar();
 				String password, comprobarPassword;
 				do {
@@ -54,12 +54,12 @@ public class RegistroController {
 						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", 0, preocupado);
 					}
 				}while (!comprobarPassword.equals(password));
-			} else {switchRegistro();}
-			break;
-		case "Cliente":
+			} else switchRegistro();
+		}
+		case "Cliente" -> {
 			Cliente comprobarUsuarioC = UIRegistro.comprobarUsuarioC();
 			boolean existeUsuarioC = dbRegistro.comprobarUsuarioC(comprobarUsuarioC);
-			if (existeUsuarioC == false) {
+			if (!existeUsuarioC) {
 				String usuario = comprobarUsuarioC.getActualizar();
 				String password, comprobarPassword;
 				do {
@@ -77,11 +77,10 @@ public class RegistroController {
 					} else {
 						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", 0, preocupado);
 					}
-				}while (!comprobarPassword.equals(password));
-			} else {switchRegistro();}
-			break;
-		case "Volver atrás":
-			MainMenu.opciones();
+				} while (!comprobarPassword.equals(password));
+			} else switchRegistro();
+		}
+		case "Volver atrás" -> MainMenu.opciones();
 		}
 	}
 }

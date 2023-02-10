@@ -4,7 +4,9 @@ import javax.swing.*;
 
 import com.project.controllers.ClienteController;
 import com.project.controllers.GestorController;
+import com.project.controllers.LoginController;
 import com.project.controllers.MensajeController;
+import com.project.controllers.RegistroController;
 import com.project.controllers.TransferenciaController;
 
 
@@ -29,8 +31,12 @@ public class MainMenu {
         case "Transferencias":
         	TransferenciaController.switchTransferencia();
         	break;
-        case "Login": break;
-        case "Registro": break;
+        case "Login":
+        	LoginController.switchLogin();
+        	break;
+        case "Registro":
+        	RegistroController.switchRegistro();
+        	break;
         }
 
     } catch (Exception e){

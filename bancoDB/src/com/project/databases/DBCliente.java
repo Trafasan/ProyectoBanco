@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.project.environments.DBConnection;
@@ -14,9 +15,11 @@ import com.project.models.Gestor;
 public class DBCliente {
 	DBConnection connection = new DBConnection();
 
+	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+
 	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 	ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-	
+
 	public boolean comprobarId_gestorInsertar(Gestor gestor) {
 		boolean existeId_gestor = false;
 		try {
@@ -32,12 +35,10 @@ public class DBCliente {
 			}
 
 			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < gestores.size(); x++) {
-					JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-					existeId_gestor = true;
-				}
+				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+				existeId_gestor = true;
 
 			}
 		} catch (SQLException e) {
@@ -73,13 +74,14 @@ public class DBCliente {
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
-				clientes.add(new Cliente(resultados.getInt("id"), resultados.getInt("id_gestor"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo"), resultados.getDouble("saldo")));
+				clientes.add(new Cliente(resultados.getInt("id"), resultados.getInt("id_gestor"),
+						resultados.getString("nombre"), resultados.getString("apellido"), resultados.getString("dni"),
+						resultados.getString("usuario"), resultados.getString("password"),
+						resultados.getString("correo"), resultados.getDouble("saldo")));
 			}
 
 			if (clientes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 2);
+				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 2, preocupado);
 			} else {
 				for (int x = 0; x < clientes.size(); x++) {
 					System.out.println("Datos del cliente " + clientes.get(x).getId_cliente());
@@ -90,7 +92,7 @@ public class DBCliente {
 					System.out.println("Usuario: " + clientes.get(x).getUsuario());
 					System.out.println("Contraseña: " + clientes.get(x).getPassword());
 					System.out.println("Correo: " + clientes.get(x).getCorreo());
-					System.out.println("Saldo: " + clientes.get(x).getSaldo()+"€\n");
+					System.out.println("Saldo: " + clientes.get(x).getSaldo() + "€\n");
 				}
 
 			}
@@ -121,7 +123,7 @@ public class DBCliente {
 		}
 
 	}
-	
+
 	public boolean comprobarCliente(Cliente cliente) {
 		boolean existeCliente = false;
 		try {
@@ -131,18 +133,17 @@ public class DBCliente {
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
-				clientes.add(new Cliente(resultados.getInt("id"), resultados.getInt("id_gestor"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo"), resultados.getDouble("saldo")));
+				clientes.add(new Cliente(resultados.getInt("id"), resultados.getInt("id_gestor"),
+						resultados.getString("nombre"), resultados.getString("apellido"), resultados.getString("dni"),
+						resultados.getString("usuario"), resultados.getString("password"),
+						resultados.getString("correo"), resultados.getDouble("saldo")));
 			}
 
 			if (clientes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < clientes.size(); x++) {
-					JOptionPane.showMessageDialog(null, "Se encontró el cliente", "BÚSQUEDA FINALIZADA", 1);
-					existeCliente = true;
-				}
+				JOptionPane.showMessageDialog(null, "Se encontró el cliente", "BÚSQUEDA FINALIZADA", 1);
+				existeCliente = true;
 
 			}
 		} catch (SQLException e) {
@@ -150,7 +151,7 @@ public class DBCliente {
 		}
 		return existeCliente;
 	}
-	
+
 	public boolean comprobarId_gestorUpdate(Gestor gestor, Cliente comprobacionCliente) {
 		boolean existeId_gestor = false;
 		try {
@@ -166,114 +167,131 @@ public class DBCliente {
 			}
 
 			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < gestores.size(); x++) {
-					existeId_gestor = true;
-				}
-
+				existeId_gestor = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return existeId_gestor;
 	}
-	
-	public void updateId_gestorCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET id_gestor=? WHERE id=?");
-            statement.setInt(1, cliente.getId_gestor());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateNombreCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET nombre=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateApellidoCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET apellido=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateDniCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET dni=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateUsuarioCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET usuario=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_gestor());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updatePasswordCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET password=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateCorreoCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET correo=? WHERE id=?");
-            statement.setString(1, cliente.getActualizar());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void updateSaldoCliente(Cliente cliente){
-        try{
-            PreparedStatement statement = connection.getConnection().prepareStatement("UPDATE cliente SET saldo=? WHERE id=?");
-            statement.setDouble(1, cliente.getSaldo());
-            statement.setInt(2, cliente.getId_cliente());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-	
-	public void borrarCliente(Cliente cliente){
-        try {
-            PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM cliente WHERE id=?");
-            statement.setInt(1, cliente.getId_cliente());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+	public void updateId_gestorCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET id_gestor=? WHERE id=?");
+			statement.setInt(1, cliente.getId_gestor());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateNombreCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET nombre=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateApellidoCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET apellido=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateDniCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET dni=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateUsuarioCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET usuario=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_gestor());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updatePasswordCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET password=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateCorreoCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET correo=? WHERE id=?");
+			statement.setString(1, cliente.getActualizar());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateSaldoCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET saldo=? WHERE id=?");
+			statement.setDouble(1, cliente.getSaldo());
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void borrarCliente(Cliente cliente) {
+		try {
+			PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM cliente WHERE id=?");
+			statement.setInt(1, cliente.getId_cliente());
+			statement.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void updateSaldoTransferencia(Cliente cliente, double nuevoImporte) {
+		try {
+			PreparedStatement statement = connection.getConnection()
+					.prepareStatement("UPDATE cliente SET saldo=? WHERE id=?");
+			statement.setDouble(1, nuevoImporte);
+			statement.setInt(2, cliente.getId_cliente());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

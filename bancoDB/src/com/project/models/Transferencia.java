@@ -29,6 +29,10 @@ public class Transferencia {
 		this.fecha = fecha;
 	}
 	
+	public Transferencia(double importe) {
+		this.importe = importe;
+	}
+	
 	public Transferencia(int id_transferencia) {
 		this.id_transferencia = id_transferencia;
 	}

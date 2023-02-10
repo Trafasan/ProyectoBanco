@@ -12,62 +12,61 @@ public class GestorController {
 
 	public static void switchGestor() {
 		DBGestor dbGestor = new DBGestor();
-		String nuevaOpcion;
+		boolean existeGestor;
+		Gestor comprobacionGestor;
+		String accion;
 		try {
-			nuevaOpcion = JOptionPane
-					.showInputDialog(null, "Inserte una opción: ", "MENÚ GESTOR", JOptionPane.PLAIN_MESSAGE, null,
+			accion = JOptionPane
+					.showInputDialog(null, "Seleccione una opción: ", "MENÚ GESTOR", JOptionPane.PLAIN_MESSAGE, null,
 							new Object[] { "Inserción de un gestor", "Inserción de varios gestores",
 									"Obtención de un gestor", "Obtención de todos los gestores",
 									"Actualización de un gestor", "Eliminación de un gestor" },
 							null)
 					.toString();
 		} catch (Exception e) {
-			nuevaOpcion = "Volver atrás";
+			accion = "Volver atrás";
 		}
 
-		switch (nuevaOpcion) {
-		case "Inserción de un gestor":
+		switch (accion) {
+		case "Inserción de un gestor" -> {
 			dbGestor.crearUnGestor(UIGestor.insertarGestor());
 			JOptionPane.showMessageDialog(null, "Inserción realizada correctamente");
 			switchGestor();
-			break;
-		case "Inserción de varios gestores":
+		}
+		case "Inserción de varios gestores" -> {
 			int numero = Integer.parseInt(JOptionPane.showInputDialog("Inserte el número de gestores a añadir:"));
 			for (int x = 0; x < numero; x++) {
 				dbGestor.crearGestorAleatorio(UIGestor.insGestorAleatorio());
 			}
 			JOptionPane.showMessageDialog(null, "Inserciones realizada correctamente");
 			switchGestor();
-			break;
-		case "Obtención de un gestor":
+		}
+		case "Obtención de un gestor" -> {
 			dbGestor.leerUnGestor(UIGestor.obtencionGestor());
 			switchGestor();
-			break;
-		case "Obtención de todos los gestores":
+		}
+		case "Obtención de todos los gestores" -> {
 			dbGestor.leerGestores();
 			switchGestor();
-			break;
-		case "Actualización de un gestor":
-			boolean existeGestor;
-			Gestor comprobacionGestor;
+		}
+		case "Actualización de un gestor" -> {
 			do {
 				comprobacionGestor = UIGestor.comprobarGestor();
 				existeGestor = dbGestor.comprobarGestor(comprobacionGestor);
 			} while (existeGestor == false);
 			GestorUpdateController.switchUpdateGestor(comprobacionGestor);
 			switchGestor();
-			break;
-		case "Eliminación de un gestor":
+		}
+		case "Eliminación de un gestor" -> {
 			do {
 				comprobacionGestor = UIGestor.comprobarGestor();
 				existeGestor = dbGestor.comprobarGestor(comprobacionGestor);
 			} while (existeGestor == false);
 			int confirmacion;
 			try {
-				ImageIcon icon = new ImageIcon("src/images/eliminar.png");
 				confirmacion = JOptionPane.showConfirmDialog(null,
 						"¿Seguro que quieres eliminar al gestor " + comprobacionGestor.getId_gestor() + "?",
-						"MENSAJE DE CONFIRMACIÓN", 0, 3, icon);
+						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/images/eliminar.png"));
 			} catch (Exception e) {
 				confirmacion = 1;
 			}
@@ -83,9 +82,8 @@ public class GestorController {
 			}
 
 			switchGestor();
-			break;
-		case "Volver atrás":
-			MainMenu.opciones();
+		}
+		case "Volver atrás" -> MainMenu.opciones();
 		}
 	}
 }

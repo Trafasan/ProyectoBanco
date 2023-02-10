@@ -33,12 +33,12 @@ public class Cliente extends Persona{
 		this.saldo = saldo;
 	}
 	
-	public Cliente(int id_cliente) {
-		this.id_cliente = id_cliente;
+	public Cliente(String actualizar) {
+		super(actualizar);
 	}
 	
-	public Cliente(String usuario) {
-		super(usuario);
+	public Cliente(int id_cliente) {
+		this.id_cliente = id_cliente;
 	}
 
 	public int getId_cliente() {return id_cliente;}

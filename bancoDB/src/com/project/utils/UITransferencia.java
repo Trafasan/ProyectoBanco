@@ -32,11 +32,17 @@ public class UITransferencia {
 		Cliente cliente = new Cliente(b);
 		return cliente;
 	}
-	// Debe retocarse para que se cambien los saldos de los clientes
-	public static Transferencia envíoTransferencia(Cliente comprobacionId_ordenante, Cliente comprobacionId_beneficiario) {
+	
+	public static Transferencia comprobarImporte() {
+		double i = Double.parseDouble(JOptionPane.showInputDialog(null, "Introduzca el importe de la nueva transferencia:",
+				"ENVÍO DE LA TRANSFERENCIA", 1));
+		Transferencia transferencia = new Transferencia(i);
+		return transferencia;
+	}
+	
+	public static Transferencia envíoTransferencia(Cliente comprobacionId_ordenante, Cliente comprobacionId_beneficiario, double importe) {
 		int id_ordenante = comprobacionId_ordenante.getId_cliente();
 		int id_beneficiario = comprobacionId_beneficiario.getId_cliente();
-		Double importe = Double.parseDouble(JOptionPane.showInputDialog("Inserte el importe de la nueva transferencia:"));
 		String concepto = JOptionPane.showInputDialog("Inserte el texto de la nueva transferencia:");
 		Long datetime = System.currentTimeMillis();
 		Timestamp fecha = new Timestamp(datetime);

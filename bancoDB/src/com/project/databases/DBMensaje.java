@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.project.environments.DBConnection;
@@ -13,6 +14,8 @@ import com.project.models.Mensaje;
 
 public class DBMensaje {
 	DBConnection connection = new DBConnection();
+
+	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
 
 	ArrayList<Gestor> origen = new ArrayList<Gestor>();
 	ArrayList<Gestor> destino = new ArrayList<Gestor>();
@@ -32,7 +35,7 @@ public class DBMensaje {
 			}
 
 			if (mensajes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún mensaje con ese ID", "ERROR", 2);
+				JOptionPane.showMessageDialog(null, "No existe ningún mensaje con ese ID", "ERROR", 2, preocupado);
 			} else {
 				for (int x = 0; x < mensajes.size(); x++) {
 					System.out.println("Datos del mensaje " + mensajes.get(x).getId_mensaje());
@@ -81,12 +84,10 @@ public class DBMensaje {
 			}
 
 			if (origen.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < origen.size(); x++) {
-					JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-					existeId_origen = true;
-				}
+				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+				existeId_origen = true;
 
 			}
 		} catch (SQLException e) {
@@ -110,12 +111,10 @@ public class DBMensaje {
 			}
 
 			if (destino.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0);
+				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 			} else {
-				for (int x = 0; x < destino.size(); x++) {
-					JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-					existeId_destino = true;
-				}
+				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+				existeId_destino = true;
 
 			}
 		} catch (SQLException e) {
