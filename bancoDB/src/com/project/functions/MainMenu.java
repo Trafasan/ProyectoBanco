@@ -19,29 +19,16 @@ public class MainMenu {
 				new Object[] {"Gestores","Clientes", "Mensajes", "Transferencias", "Login", "Registro"}, null).toString();
 
         switch (opcion){
-        case "Gestores":
-        	GestorController.switchGestor();
-        	break;
-        case "Clientes":
-        	ClienteController.switchCliente();
-        	break;
-        case "Mensajes":
-        	MensajeController.switchMensaje();
-        	break;
-        case "Transferencias":
-        	TransferenciaController.switchTransferencia();
-        	break;
-        case "Login":
-        	LoginController.switchLogin();
-        	break;
-        case "Registro":
-        	RegistroController.switchRegistro();
-        	break;
+        case "Gestores" -> GestorController.switchGestor();
+        case "Clientes" -> ClienteController.switchCliente();
+        case "Mensajes" -> MensajeController.switchMensaje();
+        case "Transferencias" -> TransferenciaController.switchTransferencia();
+        case "Login" -> LoginController.switchLogin();
+        case "Registro" -> RegistroController.switchRegistro();
         }
 
     } catch (Exception e){
-      ImageIcon icon = new ImageIcon("src/images/gracias.png");
-      JOptionPane.showMessageDialog(null, "Gracias por usar este programa", "HASTA PRONTO", 1, icon);
+      JOptionPane.showMessageDialog(null, "Gracias por usar este programa", "HASTA PRONTO", 1, new ImageIcon("src/images/gracias.png"));
     }
 
   }

@@ -13,12 +13,10 @@ import com.project.models.Gestor;
 
 public class DBGestor {
 	DBConnection connection = new DBConnection();
-
 	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
-
 	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 
-	public void crearUnGestor(Gestor gestor) {
+	public void addGestor(Gestor gestor) {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(
 					"INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
@@ -35,7 +33,7 @@ public class DBGestor {
 		}
 	}
 
-	public void crearGestorAleatorio(Gestor gestor) {
+	public void addGestores(Gestor gestor) {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(
 					"INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
@@ -52,43 +50,37 @@ public class DBGestor {
 		}
 	}
 
-	public void leerUnGestor(Gestor gestor) {
+	public void getGestor(Gestor gestor) {
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
+			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor WHERE id=?");
 			statement.setInt(1, gestor.getId_gestor());
-
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
 				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
 						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
 						resultados.getString("password"), resultados.getString("correo")));
 			}
-
-			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 2, preocupado);
-			} else {
-				for (int x = 0; x < gestores.size(); x++) {
-					System.out.println("Datos del gestor " + gestores.get(x).getId_gestor());
-					System.out.println("Nombre: " + gestores.get(x).getNombre());
-					System.out.println("Apellido: " + gestores.get(x).getApellido());
-					System.out.println("DNI: " + gestores.get(x).getDni());
-					System.out.println("Usuario: " + gestores.get(x).getUsuario());
-					System.out.println("Contraseña: " + gestores.get(x).getPassword());
-					System.out.println("Correo: " + gestores.get(x).getCorreo() + "\n");
+			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 2, preocupado);
+			else {
+				for (int i= 0; i<gestores.size(); i++) {
+					System.out.println("Datos del gestor " + gestores.get(i).getId_gestor());
+					System.out.println("Nombre: " + gestores.get(i).getNombre());
+					System.out.println("Apellido: " + gestores.get(i).getApellido());
+					System.out.println("DNI: " + gestores.get(i).getDni());
+					System.out.println("Usuario: " + gestores.get(i).getUsuario());
+					System.out.println("Contraseña: " + gestores.get(i).getPassword());
+					System.out.println("Correo: " + gestores.get(i).getCorreo() + "\n");
 				}
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void leerGestores() {
+	public void getGestores() {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor");
 			ResultSet resultados = statement.executeQuery();
-
 			while (resultados.next()) {
 				System.out.println("Datos del gestor " + resultados.getInt("id"));
 				System.out.println("Nombre: " + resultados.getString("nombre"));
@@ -97,17 +89,14 @@ public class DBGestor {
 				System.out.println("Usuario: " + resultados.getString("usuario"));
 				System.out.println("Contraseña: " + resultados.getString("password"));
 				System.out.println("Correo: " + resultados.getString("correo") + "\n");
-
 			}
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		}
 
 	}
 
-	public boolean comprobarGestor(Gestor gestor) {
-		boolean existeGestor = false;
+	public boolean existeGestor(Gestor gestor) {
 		try {
 			PreparedStatement statement = connection.getConnection()
 					.prepareStatement("SELECT * FROM gestor WHERE id=?");
@@ -119,18 +108,15 @@ public class DBGestor {
 						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
 						resultados.getString("password"), resultados.getString("correo")));
 			}
-
-			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
-			} else {
+			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 0, preocupado);
+			else {
 				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-				existeGestor = true;
-
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return existeGestor;
+		return false;
 	}
 
 	public void updateNombreGestor(Gestor gestor) {
@@ -205,7 +191,7 @@ public class DBGestor {
 		}
 	}
 
-	public void borrarGestor(Gestor gestor) {
+	public void deleteGestor(Gestor gestor) {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM gestor WHERE id=?");
 			statement.setInt(1, gestor.getId_gestor());
