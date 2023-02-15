@@ -33,23 +33,6 @@ public class DBGestor {
 		}
 	}
 
-	public void addGestores(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement(
-					"INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
-			statement.setInt(1, gestor.getId_gestor());
-			statement.setString(2, gestor.getNombre());
-			statement.setString(3, gestor.getApellido());
-			statement.setString(4, gestor.getDni());
-			statement.setString(5, gestor.getUsuario());
-			statement.setString(6, gestor.getPassword());
-			statement.setString(7, gestor.getCorreo());
-			statement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void getGestor(Gestor gestor) {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor WHERE id=?");
@@ -60,36 +43,24 @@ public class DBGestor {
 						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
 						resultados.getString("password"), resultados.getString("correo")));
 			}
-			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 2, preocupado);
-			else {
-				for (int i= 0; i<gestores.size(); i++) {
-					System.out.println("Datos del gestor " + gestores.get(i).getId_gestor());
-					System.out.println("Nombre: " + gestores.get(i).getNombre());
-					System.out.println("Apellido: " + gestores.get(i).getApellido());
-					System.out.println("DNI: " + gestores.get(i).getDni());
-					System.out.println("Usuario: " + gestores.get(i).getUsuario());
-					System.out.println("Contraseña: " + gestores.get(i).getPassword());
-					System.out.println("Correo: " + gestores.get(i).getCorreo() + "\n");
-				}
-			}
+			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
+			else for (int i=0; i<gestores.size(); i++) System.out.println(gestores.get(i));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void getGestores() {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor");
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
-				System.out.println("Datos del gestor " + resultados.getInt("id"));
-				System.out.println("Nombre: " + resultados.getString("nombre"));
-				System.out.println("Apellido: " + resultados.getString("apellido"));
-				System.out.println("DNI: " + resultados.getString("dni"));
-				System.out.println("Usuario: " + resultados.getString("usuario"));
-				System.out.println("Contraseña: " + resultados.getString("password"));
-				System.out.println("Correo: " + resultados.getString("correo") + "\n");
+				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
+						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
+						resultados.getString("password"), resultados.getString("correo")));
 			}
+			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor en la base de datos\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
+			else for (int i=0; i<gestores.size(); i++) System.out.println(gestores.get(i));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -108,7 +79,7 @@ public class DBGestor {
 						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
 						resultados.getString("password"), resultados.getString("correo")));
 			}
-			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 0, preocupado);
+			if (gestores.size()==0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 0, preocupado);
 			else {
 				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
 				return true;

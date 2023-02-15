@@ -30,8 +30,6 @@ public class Gestor extends Persona {
 				+"Usuario: "+usuario+"\n"
 				+"Contraseña: "+password+"\n"
 				+"Correo: "+correo+"\n"
-				+"ID del gestor: "+id_gestor;
+				+"ID del gestor: "+id_gestor+"\n";
 	}
-	
-	
 }

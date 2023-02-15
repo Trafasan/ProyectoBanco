@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 import com.project.databases.DBCliente;
 import com.project.functions.MainMenu;
 import com.project.models.Cliente;
-import com.project.models.Gestor;
 import com.project.utils.UICliente;
 
 public class ClienteController {
@@ -22,42 +21,26 @@ public class ClienteController {
 							new Object[] { "Inserción de un cliente", "Obtención de un cliente",
 									"Obtención de todos los clientes", "Actualización de un cliente",
 									"Eliminación de un cliente" }, null).toString();
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			accion = "Volver atrás";
 		}
 
 		switch (accion) {
 		case "Inserción de un cliente" -> {
-			boolean existeId_gestor;
-			Gestor comprobacionId_gestor;
-			do {
-				comprobacionId_gestor = UICliente.comprobarId_gestorInsertar();
-				existeId_gestor = dbCliente.comprobarId_gestorInsertar(comprobacionId_gestor);
-			}while (existeId_gestor == false);
-			dbCliente.crearUnCliente(UICliente.insertarCliente(comprobacionId_gestor));
+			dbCliente.addCliente(UICliente.addCliente(dbCliente.getGestores()));
 			JOptionPane.showMessageDialog(null, "Inserción realizada correctamente");
-			switchCliente();
 		}
-		case "Obtención de un cliente" -> {
-			dbCliente.leerUnCliente(UICliente.obtencionCliente());
-			switchCliente();
-		}
-		case "Obtención de todos los clientes" -> {
-			dbCliente.leerClientes();
-			switchCliente();
-		}
+		case "Obtención de un cliente" -> dbCliente.getCliente(UICliente.getCliente("a obtener"));
+		case "Obtención de todos los clientes" -> dbCliente.getClientes();
 		case "Actualización de un cliente" -> {
-			do {
-				comprobacionCliente = UICliente.comprobarCliente();
-				existeCliente = dbCliente.comprobarCliente(comprobacionCliente);
-			}while(existeCliente == false);
-			ClienteUpdateController.switchUpdateCliente(comprobacionCliente);
-			switchCliente();
+			Cliente updateCliente = UICliente.getCliente("que quieres modificar");
+			if (dbCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateController.switchUpdateCliente(updateCliente);
 		}
 		case "Eliminación de un cliente" -> {
 			do {
 				comprobacionCliente = UICliente.comprobarCliente();
-				existeCliente = dbCliente.comprobarCliente(comprobacionCliente);
+				// existeCliente = dbCliente.comprobarCliente(comprobacionCliente);
+				existeCliente = true;
 			}while(existeCliente == false);
 			int confirmacion;
 			try {
@@ -74,9 +57,9 @@ public class ClienteController {
 			}
 			case 1 -> JOptionPane.showMessageDialog(null, "No se ha eliminado el cliente " + comprobacionCliente.getId_cliente());
 			}
-			switchCliente();
 		}
 		case "Volver atrás" -> MainMenu.opciones();
 		}
+		if (!accion.equals("Volver atrás")) switchCliente();
 	}
 }

@@ -11,7 +11,6 @@ import com.project.models.Mensaje;
 import com.project.models.Transferencia;
 
 public class AppBanco {
-	
 	private static List<Gestor> gestores = new ArrayList<Gestor> (List.of(
 			new Gestor("Helena", "Salas", "12345678A", "Dossoles", "1357", "correoG1@gmail.com", 1),
 			new Gestor("Jordi", "Fontanarrosa", "98765432Z", "Lumen124", "2468", "correoG2@gmail.com", 2)));
@@ -29,5 +28,4 @@ public class AppBanco {
 		MainMenu.opciones(gestores, clientes, mensajes, transferencias, sc);
 		sc.close();
 	}
-
 }

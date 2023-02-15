@@ -49,5 +49,17 @@ public class Cliente extends Persona{
 
 	public double getSaldo() {return saldo;}
 	public void setSaldo(double saldo) {this.saldo = saldo;}
-	
+
+	@Override
+	public String toString() {
+		return "Datos del cliente "+id_cliente+"\n"
+				+"ID del gestor: "+id_gestor+"\n"
+				+"Nombre: "+nombre+"\n"
+				+"Apellido: "+apellido+"\n"
+				+"DNI: "+dni+"\n"
+				+"Usuario: "+usuario+"\n"
+				+"Contraseña: "+password+"\n"
+				+"Correo: "+correo+"\n"
+				+"Saldo: "+String.format("%.2f", saldo)+"€\n";
+	}	
 }

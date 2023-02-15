@@ -38,8 +38,6 @@ public class Cliente extends Persona{
 		+"Correo: "+correo+"\n"
 		+"ID del cliente: "+id_cliente+"\n"
 		+"ID del gestor: "+id_gestor+"\n"
-		+"Saldo: "+saldo;
-	}	
-	
-	
+		+"Saldo: "+String.format("%.2f", saldo)+"€\n";
+	}
 }

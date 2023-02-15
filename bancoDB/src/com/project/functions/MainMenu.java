@@ -27,8 +27,8 @@ public class MainMenu {
         case "Registro" -> RegistroController.switchRegistro();
         }
 
-    } catch (Exception e){
-      JOptionPane.showMessageDialog(null, "Gracias por usar este programa", "HASTA PRONTO", 1, new ImageIcon("src/images/gracias.png"));
+    } catch (NullPointerException e){
+    	JOptionPane.showMessageDialog(null, "Gracias por usar este programa", "HASTA PRONTO", 1, new ImageIcon("src/images/gracias.png"));
     }
 
   }

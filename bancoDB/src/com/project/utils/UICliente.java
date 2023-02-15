@@ -1,47 +1,60 @@
 package com.project.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 
 import com.project.models.Cliente;
-import com.project.models.Gestor;
 import com.project.utils.UICliente;
 
 public class UICliente {
-	// 7. Inserción de un cliente
+	// Inserción de un cliente
 
-	// Comprobación previa de que existe el cliente con ese ID
-	public static Gestor comprobarId_gestorInsertar() {
-		int n = Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del gestor del nuevo cliente: "));
-		Gestor gestor = new Gestor(n);
-		return gestor;
+	// Comprobación previa de que existe el cliente con ese ID (tres métodos privados)
+	
+	private static int idMaxGestor(ArrayList<Integer> id_gestores) {
+		id_gestores.sort(Collections.reverseOrder());
+		return id_gestores.get(0);
 	}
-
-	public static Cliente insertarCliente(Gestor comprobacionId_gestor) {
-		int id_gestor = comprobacionId_gestor.getId_gestor();
+	private static int getIdGestorAleatorio(ArrayList<Integer> id_gestores) {
+		return new Random().nextInt(idMaxGestor(id_gestores));
+	}
+	private static boolean existeIdGestor(ArrayList<Integer> id_gestores, int idGestorAleatorio) {
+		for (int id:id_gestores) if (id == idGestorAleatorio) return true;
+		return false;
+	}
+	
+	public static Cliente addCliente(ArrayList<Integer> id_gestores) {
+		int id_gestor;
+		boolean existeGestor;
+		do {
+			id_gestor = getIdGestorAleatorio(id_gestores);
+			existeGestor = existeIdGestor(id_gestores, id_gestor);
+		} while (!existeGestor);
 		String nombre = JOptionPane.showInputDialog("Inserte el nombre del nuevo cliente: ");
 		String apellido = JOptionPane.showInputDialog("Inserte el apellido del nuevo cliente: ");
 		String dni = JOptionPane.showInputDialog("Inserte el DNI del nuevo cliente: ");
 		String usuario = JOptionPane.showInputDialog("Inserte el usuario del nuevo cliente: ");
-		String password = JOptionPane.showInputDialog("Inserte la contraseña del nuevo cliente: ");
+		String password = UIGestor.nuevoPassword("Introduzca la contraseña del nuevo cliente", "Input", 3);
 		String correo = JOptionPane.showInputDialog("Inserte el correo del nuevo cliente: ");
-		double saldo = Double.parseDouble(JOptionPane.showInputDialog("Inserte el saldo del nuevo cliente: "));
-
-		Cliente cliente = new Cliente(id_gestor, nombre, apellido, dni, usuario, password, correo, saldo);
-
-		return cliente;
-
-	}
-
-	// 8. Obtención de un cliente
-	public static Cliente obtencionCliente() {
-		int n = Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del cliente a obtener: "));
-		Cliente cliente = new Cliente(n);
+		Cliente cliente = new Cliente(id_gestor, nombre, apellido, dni, usuario, password, correo, 0);
 		return cliente;
 	}
 
-	// 10. Actualización de un cliente (dato a dato)
+	// Obtención de un cliente
+	public static Cliente getCliente(String texto) {
+		try {
+			return new Cliente(Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del cliente "+texto+": ")));
+		} catch (NumberFormatException e) {
+			return new Cliente(null);
+		}
+	}
 
-	// Comprobación previa de que existe el cliente con ese ID
+	// Actualización de un cliente (dato a dato)
+
+	// Comprobación previa de que existe el cliente con ese ID (solo para eliminar)
 	public static Cliente comprobarCliente() {
 		int n = Integer.parseInt(JOptionPane.showInputDialog("Proporciona la ID del cliente que quieres modificar:"));
 		Cliente cliente = new Cliente(n);
@@ -49,19 +62,27 @@ public class UICliente {
 	}
 
 	// Comprobación previa de que existe el gestor con ese ID
-	public static Gestor comprobarId_gestorUpdate(Cliente comprobacionCliente) {
-		int id = comprobacionCliente.getId_cliente();
-		int n = Integer.parseInt(JOptionPane.showInputDialog(null, "Introduzca el ID del nuevo gestor:",
-				"ACTUALIZACIÓN DEL CLIENTE " + id, 1));
-		Gestor gestor = new Gestor(n);
-		return gestor;
+	public static int setId_gestorUpdate(Cliente updateCliente) {
+		int id = updateCliente.getId_cliente();
+		try {
+			return Integer.parseInt(JOptionPane.showInputDialog(null, "Introduzca el ID del nuevo gestor:",
+					"ACTUALIZACIÓN DEL CLIENTE " + id, 1));
+		} catch (NumberFormatException e) {
+			return 0;
+		}
+	}
+	public static boolean existeIdGestorUpdate(Cliente updateCliente, ArrayList<Integer> id_gestores, int id_gestor) {
+		for (int id:id_gestores) if (id == id_gestor) return true;
+		return false;
 	}
 
-	public static Cliente updateId_gestorCliente(Cliente comprobacionCliente, Gestor comprobacionId_gestor) {
-		int id = comprobacionCliente.getId_cliente();
-		int id_gestor = comprobacionId_gestor.getId_gestor();
-		Cliente cliente = new Cliente(id, id_gestor);
-		return cliente;
+	public static Cliente updateId_gestorCliente(Cliente updateCliente, int id_gestor) {
+		return new Cliente(updateCliente.getId_cliente(), id_gestor);
+	}
+	
+	public static Cliente updateCliente(Cliente updateCliente, String texto, int id) {
+		return new Cliente(id, JOptionPane.showInputDialog(null, "Introduzca "+texto+":",
+				"ACTUALIZACIÓN DEL CLIENTE "+id, 1));
 	}
 
 	public static Cliente updateNombreCliente(Cliente comprobacionCliente) {

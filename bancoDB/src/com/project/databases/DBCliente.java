@@ -19,35 +19,25 @@ public class DBCliente {
 
 	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 	ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+	
+	/**
+	 * Guarda en una ArrayList las ID de todos los gestores de la base de datos
+	 * @return ArrayList de las ID de los gestores
+	 */
+	public ArrayList<Integer> getGestores() {
+  		ArrayList<Integer> id_gestores = new ArrayList<Integer>();
+	  	try {
+	  		PreparedStatement statement = connection.getConnection() .prepareStatement("SELECT * FROM cliente");
+	  		ResultSet resultados = statement.executeQuery();
+	  		while (resultados.next()) gestores.add(new Gestor(resultados.getInt("id")));
+			for (Gestor gestor:gestores) id_gestores.add(gestor.getId_gestor());
+	  	} catch (SQLException e) {
+	  		e.printStackTrace();
+	  	}
+	  return id_gestores;
+	  }
 
-	public boolean comprobarId_gestorInsertar(Gestor gestor) {
-		boolean existeId_gestor = false;
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
-			}
-
-			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
-			} else {
-				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-				existeId_gestor = true;
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return existeId_gestor;
-	}
-
-	public void crearUnCliente(Cliente cliente) {
+	public void addCliente(Cliente cliente) {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(
 					"INSERT INTO cliente (id, id_gestor, nombre, apellido, dni, usuario, password, correo, saldo)VALUES(?,?,?,?,?,?,?,?,?)");
@@ -66,7 +56,7 @@ public class DBCliente {
 		}
 	}
 
-	public void leerUnCliente(Cliente cliente) {
+	public void getCliente(Cliente cliente) {
 		try {
 			PreparedStatement statement = connection.getConnection()
 					.prepareStatement("SELECT * FROM cliente WHERE id=?");
@@ -79,53 +69,32 @@ public class DBCliente {
 						resultados.getString("usuario"), resultados.getString("password"),
 						resultados.getString("correo"), resultados.getDouble("saldo")));
 			}
-
-			if (clientes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 2, preocupado);
-			} else {
-				for (int x = 0; x < clientes.size(); x++) {
-					System.out.println("Datos del cliente " + clientes.get(x).getId_cliente());
-					System.out.println("ID del gestor: " + clientes.get(x).getId_gestor());
-					System.out.println("Nombre: " + clientes.get(x).getNombre());
-					System.out.println("Apellido: " + clientes.get(x).getApellido());
-					System.out.println("DNI: " + clientes.get(x).getDni());
-					System.out.println("Usuario: " + clientes.get(x).getUsuario());
-					System.out.println("Contraseña: " + clientes.get(x).getPassword());
-					System.out.println("Correo: " + clientes.get(x).getCorreo());
-					System.out.println("Saldo: " + clientes.get(x).getSaldo() + "€\n");
-				}
-
-			}
+			if (clientes.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID\nSe le redigirá al menú Cliente", "ERROR", 2, preocupado);
+			else for (int i=0; i<clientes.size(); i++) System.out.println(clientes.get(i));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void leerClientes() {
+	public void getClientes() {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM cliente");
 			ResultSet resultados = statement.executeQuery();
-
 			while (resultados.next()) {
-				System.out.println("Datos del cliente " + resultados.getInt("id"));
-				System.out.println("ID del gestor: " + resultados.getInt("id_gestor"));
-				System.out.println("Nombre: " + resultados.getString("nombre"));
-				System.out.println("Apellido: " + resultados.getString("apellido"));
-				System.out.println("DNI: " + resultados.getString("dni"));
-				System.out.println("Usuario: " + resultados.getString("usuario"));
-				System.out.println("Contraseña: " + resultados.getString("password"));
-				System.out.println("Correo: " + resultados.getString("correo"));
-				System.out.println("Saldo: " + resultados.getDouble("saldo") + "€\n");
+				clientes.add(new Cliente(resultados.getInt("id"), resultados.getInt("id_gestor"),
+						resultados.getString("nombre"), resultados.getString("apellido"), resultados.getString("dni"),
+						resultados.getString("usuario"), resultados.getString("password"),
+						resultados.getString("correo"), resultados.getDouble("saldo")));
 			}
-		} catch (SQLException e) {
 
+			if (clientes.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún cliente en la base de datos\nSe le redigirá al menú Cliente", "ERROR", 2, preocupado);
+			else for (int i=0; i<clientes.size(); i++) System.out.println(clientes.get(i));
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
-	public boolean comprobarCliente(Cliente cliente) {
-		boolean existeCliente = false;
+	public boolean existeCliente(Cliente cliente) {
 		try {
 			PreparedStatement statement = connection.getConnection()
 					.prepareStatement("SELECT * FROM cliente WHERE id=?");
@@ -138,45 +107,18 @@ public class DBCliente {
 						resultados.getString("usuario"), resultados.getString("password"),
 						resultados.getString("correo"), resultados.getDouble("saldo")));
 			}
-
-			if (clientes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID", "ERROR", 0, preocupado);
-			} else {
+			if (clientes.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún cliente con ese ID\nSe le redigirá al menú Cliente", "ERROR", 0, preocupado);
+			else {
 				JOptionPane.showMessageDialog(null, "Se encontró el cliente", "BÚSQUEDA FINALIZADA", 1);
-				existeCliente = true;
+				return true;
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return existeCliente;
+		return false;
 	}
-
-	public boolean comprobarId_gestorUpdate(Gestor gestor, Cliente comprobacionCliente) {
-		boolean existeId_gestor = false;
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
-			}
-
-			if (gestores.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
-			} else {
-				existeId_gestor = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return existeId_gestor;
-	}
-
+	
 	public void updateId_gestorCliente(Cliente cliente) {
 		try {
 			PreparedStatement statement = connection.getConnection()

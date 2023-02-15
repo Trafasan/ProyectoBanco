@@ -28,8 +28,7 @@ public class UICliente {
 		clientes.get(id_cliente).setCorreo(sc.nextLine());
 		int id_gestor = UIGestor.getIdGestorAleatorio(gestores);
 		clientes.get(id_cliente).setId_gestor(id_gestor);
-		System.out.print("Inserte el saldo del nuevo cliente: ");
-		clientes.get(id_cliente).setSaldo(Double.parseDouble(sc.nextLine()));
+		clientes.get(id_cliente).setSaldo(0);
 		System.out.println("Inserción realizada correctamente. Se le ha adjudicado un gestor aleatoriamente. Sus datos son los siguientes:");
 		UIGestor.getGestorAleatorio(gestores, id_gestor);
 	}
