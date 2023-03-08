@@ -1,5 +1,6 @@
 package com.sandra.bancoDB.databases;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.entidades.Gestor;
 
 public class DBLogin {
-	DBConnection connection = new DBConnection();
+	Connection con = DBConnection.conexion();
 
 	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 
@@ -23,9 +24,8 @@ public class DBLogin {
 	public boolean comprobarUsuarioG(Gestor gestor) {
 		boolean existeUsuarioG = false;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
-			statement.setString(1, gestor.getActualizar());
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			statement.setString(1, gestor.getUpdateDato());
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
@@ -48,8 +48,7 @@ public class DBLogin {
 	public String obtenerPasswordG(String usuario) {
 		String password = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -69,8 +68,7 @@ public class DBLogin {
 	public String obtenerNombreG(String usuario) {
 		String nombre = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -90,8 +88,7 @@ public class DBLogin {
 	public String obtenerApellidoG(String usuario) {
 		String apellido = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -111,9 +108,8 @@ public class DBLogin {
 	public boolean comprobarUsuarioC(Cliente cliente) {
 		boolean existeUsuarioC = false;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
-			statement.setString(1, cliente.getActualizar());
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			statement.setString(1, cliente.getUpdateDato());
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
@@ -137,8 +133,7 @@ public class DBLogin {
 	public String obtenerPasswordC(String usuario) {
 		String password = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -159,8 +154,7 @@ public class DBLogin {
 	public String obtenerNombreC(String usuario) {
 		String nombre = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -181,8 +175,7 @@ public class DBLogin {
 	public String obtenerApellidoC(String usuario) {
 		String apellido = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();

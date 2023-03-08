@@ -7,7 +7,7 @@ public class Persona {
 	protected String usuario;
 	protected String password;
 	protected String correo;
-	protected String actualizar;
+	protected String updateDato;
 	
 	public Persona(String nombre, String apellido, String dni, String usuario, String password, String correo) {
 		this.nombre = nombre;
@@ -18,8 +18,8 @@ public class Persona {
 		this.correo = correo;
 	}
 	
-	public Persona(String actualizar) {
-		this.actualizar = actualizar;
+	public Persona(String updateDato) {
+		this.updateDato = updateDato;
 	}
 	
 	public Persona() {
@@ -49,8 +49,8 @@ public class Persona {
 	public String getCorreo() {return correo;}
 	public void setCorreo(String correo) {this.correo = correo;}
 	
-	public String getActualizar() {return actualizar;}
-	public void setActualizar(String actualizar) {this.actualizar = actualizar;}
+	public String getUpdateDato() {return updateDato;}
+	public void setUpdateDato(String actualizar) {this.updateDato = actualizar;}
 	
 	
 	

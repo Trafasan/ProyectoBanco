@@ -47,41 +47,41 @@ public class UIGestor {
 	}
 
 	// Obtención de un gestor y comprobación previa de que existe el gestor con ese ID
-	public static Gestor getGestor(String texto) {
+	public static int getId_gestor(String texto) {
 		try {
-			return new Gestor(Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del gestor "+texto+": ")));
+			return Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del gestor "+texto+": "));
 		} catch (NumberFormatException e) {
-			return new Gestor(null);
+			return -1;
 		}
 	}
 
 	// Actualización de un gestor (dato a dato)
 	
-	public static Gestor updateGestor(Gestor updateGestor, String texto, int id) {
+	public static Gestor updateGestor(String texto, int id) {
 		return new Gestor(id, JOptionPane.showInputDialog(null, "Introduzca "+texto+":", "ACTUALIZACIÓN DEL GESTOR " + id, 1));
 	}
 	
 	// Se hace un método aparte para la contraseña ya que se debe comprobar que la contraseña sea válida
-	public static Gestor updatePasswordGestor(Gestor updateGestor, String password, int id) {
+	public static Gestor updatePasswordGestor(String password, int id) {
         return new Gestor(id, password);
     }
 	
 	// Eliminación de un gestor con confirmación de la acción
-		public static void deleteGestor(DBGestor dbGestor, Gestor updateGestor) {
+		public static void deleteGestor(int id_gestor) {
 			int confirmacion;
 			try {
 				confirmacion = JOptionPane.showConfirmDialog(null,
-						"¿Seguro que quieres eliminar al gestor " + updateGestor.getId_gestor() + "?",
+						"¿Seguro que quieres eliminar al gestor " + id_gestor + "?",
 						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/main/java/com/sandra/bancoDB/images/eliminar.png"));
 			} catch (Exception e) {
 				confirmacion = 1;
 			}
 			switch (confirmacion) {
 			case 0 -> {
-				dbGestor.deleteGestor(updateGestor);
+				DBGestor.deleteGestor(id_gestor);
 				JOptionPane.showMessageDialog(null, "Eliminación realizada correctamente");
 			}
-			case 1 -> JOptionPane.showMessageDialog(null, "No se ha eliminado el gestor " + updateGestor.getId_gestor());
+			case 1 -> JOptionPane.showMessageDialog(null, "No se ha eliminado el gestor " + id_gestor);
 			}
 		}
 }

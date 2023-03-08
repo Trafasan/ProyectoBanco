@@ -1,5 +1,6 @@
 package com.sandra.bancoDB.databases;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.entidades.Transferencia;
 
 public class DBTransferencia {
-	DBConnection connection = new DBConnection();
+	Connection con = DBConnection.conexion();
 
 	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 
@@ -23,8 +24,7 @@ public class DBTransferencia {
 
 	public void leerUnaTransferencia(Transferencia transferencia) {
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM transferencia WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM transferencia WHERE id=?");
 			statement.setInt(1, transferencia.getId_transferencia());
 
 			ResultSet resultados = statement.executeQuery();
@@ -55,7 +55,7 @@ public class DBTransferencia {
 
 	public void leerTransferencias() {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM transferencia");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM transferencia");
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
@@ -75,8 +75,7 @@ public class DBTransferencia {
 	public boolean comprobarId_ordenante(Cliente cliente) {
 		boolean existeId_ordenante = false;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
 			statement.setInt(1, cliente.getId_cliente());
 
 			ResultSet resultados = statement.executeQuery();
@@ -103,8 +102,7 @@ public class DBTransferencia {
 	public boolean comprobarId_beneficiario(Cliente cliente) {
 		boolean existeId_beneficiario = false;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
 			statement.setInt(1, cliente.getId_cliente());
 
 			ResultSet resultados = statement.executeQuery();
@@ -132,7 +130,7 @@ public class DBTransferencia {
 	// involucrados)
 	public void enviarTransferencia(Transferencia transferencia) {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement(
+			PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO transferencia (id, id_ordenante, id_beneficiario, importe, concepto, fecha)VALUES(?,?,?,?,?,?)");
 			statement.setInt(1, transferencia.getId_transferencia());
 			statement.setInt(2, transferencia.getId_ordenante());
@@ -149,8 +147,7 @@ public class DBTransferencia {
 	public double leerSaldoOrdenante(Cliente cliente) {
 		double saldoOrdenante = 0;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
 			statement.setInt(1, cliente.getId_gestor());
 
 			ResultSet resultados = statement.executeQuery();
@@ -174,8 +171,7 @@ public class DBTransferencia {
 	public double leerSaldoBeneficiario(Cliente cliente) {
 		double saldoBeneficiario = 0;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE id=?");
 			statement.setInt(1, cliente.getId_gestor());
 
 			ResultSet resultados = statement.executeQuery();

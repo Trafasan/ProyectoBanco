@@ -13,17 +13,13 @@ public class Gestor extends Persona {
 		super(nombre, apellido, dni, usuario, password, correo);
 	}
 	
-	public Gestor(int id_gestor, String actualizar) {
-		super(actualizar);
+	public Gestor(int id_gestor, String updateDato) {
+		super(updateDato);
 		this.id_gestor = id_gestor;
 	}
 	
-	public Gestor(String actualizar) {
-		super(actualizar);
-	}
-
-	public Gestor(int id_gestor) {
-		this.id_gestor = id_gestor;
+	public Gestor(String updateDato) {
+		super(updateDato);
 	}
 
 	public Gestor() {

@@ -1,9 +1,12 @@
 package com.sandra.bancoDB.databases;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -12,101 +15,81 @@ import com.sandra.bancoDB.connection.DBConnection;
 import com.sandra.bancoDB.entidades.Gestor;
 
 public class DBGestor {
-	DBConnection connection = new DBConnection();
-	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
-	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
+	public static ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
+	public static Connection con = DBConnection.conexion();
+	public static PreparedStatement ps;
+	public static ResultSet rs;
 
-	public void addGestor(Gestor gestor) {
+	public static void addGestor(Gestor gestor) {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement(
-					"INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
-			statement.setInt(1, gestor.getId_gestor());
-			statement.setString(2, gestor.getNombre());
-			statement.setString(3, gestor.getApellido());
-			statement.setString(4, gestor.getDni());
-			statement.setString(5, gestor.getUsuario());
-			statement.setString(6, gestor.getPassword());
-			statement.setString(7, gestor.getCorreo());
-			statement.execute();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void getGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
-			}
-			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
-			else for (int i=0; i<gestores.size(); i++) System.out.println(gestores.get(i));
+			ps = con.prepareStatement("INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
+			ps.setInt(1, gestor.getId_gestor());
+			ps.setString(2, gestor.getNombre());
+			ps.setString(3, gestor.getApellido());
+			ps.setString(4, gestor.getDni());
+			ps.setString(5, gestor.getUsuario());
+			ps.setString(6, gestor.getPassword());
+			ps.setString(7, gestor.getCorreo());
+			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public void getGestores() {
+	public static List<Gestor> datosGestores() {
+		List<Gestor> gestores = new ArrayList<Gestor>();
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor");
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
+			ps = con.prepareStatement("SELECT * FROM gestor");
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				gestores.add(new Gestor(rs.getInt("id"), rs.getString("nombre"),
+						rs.getString("apellido"), rs.getString("dni"), rs.getString("usuario"),
+						rs.getString("password"), rs.getString("correo")));
 			}
-			if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor en la base de datos\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
-			else for (int i=0; i<gestores.size(); i++) System.out.println(gestores.get(i));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		return gestores;
 	}
 
-	public boolean existeGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
+	public static void getGestor(int id_gestor) {
+		List<Gestor> gestores = datosGestores().stream().filter(e->e.getId_gestor() == id_gestor).collect(Collectors.toList());
+		if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
+		else gestores.forEach(System.out::println);
+	}
+	
+	public static void getGestores() {
+		List<Gestor> gestores = datosGestores();
+		if (gestores.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún gestor en la base de datos\nSe le redigirá al menú Gestor", "ERROR", 2, preocupado);
+		else gestores.forEach(System.out::println);
+	}
 
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				gestores.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
+	public static boolean existeGestor(int id_gestor) {
+		List<Gestor> gestores = datosGestores().stream().filter(e->e.getId_gestor() == id_gestor).collect(Collectors.toList());
+		if (gestores.size()==0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 0, preocupado);
+		else {
+			JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+			return true;
 			}
-			if (gestores.size()==0) JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Gestor", "ERROR", 0, preocupado);
-			else {
-				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 		return false;
 	}
 
-	public void updateDatoGestor(Gestor gestor, String dato) {
+	public static void updateDatoGestor(Gestor gestor, String dato) {
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET "+dato+"=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
+			ps = con.prepareStatement("UPDATE gestor SET "+dato+"=? WHERE id=?");
+			ps.setString(1, gestor.getUpdateDato());
+			ps.setInt(2, gestor.getId_gestor());
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deleteGestor(Gestor gestor) {
+	public static void deleteGestor(int id_gestor) {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("DELETE FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-			statement.execute();
+			ps = con.prepareStatement("DELETE FROM gestor WHERE id=?");
+			ps.setInt(1, id_gestor);
+			ps.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

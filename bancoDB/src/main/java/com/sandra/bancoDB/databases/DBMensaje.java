@@ -1,9 +1,12 @@
 package com.sandra.bancoDB.databases;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -13,18 +16,17 @@ import com.sandra.bancoDB.entidades.Gestor;
 import com.sandra.bancoDB.entidades.Mensaje;
 
 public class DBMensaje {
-	DBConnection connection = new DBConnection();
+	Connection con = DBConnection.conexion();
 
-	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
+	public static ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 
 	ArrayList<Gestor> origen = new ArrayList<Gestor>();
 	ArrayList<Gestor> destino = new ArrayList<Gestor>();
 	ArrayList<Mensaje> mensajes = new ArrayList<Mensaje>();
 
-	public void leerUnMensaje(Mensaje mensaje) {
+	public void getMensaje(Mensaje mensaje) {
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM mensaje WHERE id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM mensaje WHERE id=?");
 			statement.setInt(1, mensaje.getId_mensaje());
 
 			ResultSet resultados = statement.executeQuery();
@@ -33,19 +35,8 @@ public class DBMensaje {
 						resultados.getInt("id_destino"), resultados.getString("texto"),
 						resultados.getTimestamp("fecha")));
 			}
-
-			if (mensajes.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún mensaje con ese ID", "ERROR", 2, preocupado);
-			} else {
-				for (int x = 0; x < mensajes.size(); x++) {
-					System.out.println("Datos del mensaje " + mensajes.get(x).getId_mensaje());
-					System.out.println("ID del gestor remitente: " + mensajes.get(x).getId_origen());
-					System.out.println("ID del gestor destinatario: " + mensajes.get(x).getId_destino());
-					System.out.println("Texto: " + mensajes.get(x).getTexto());
-					System.out.println("Fecha: " + mensajes.get(x).getFecha() + "\n");
-				}
-
-			}
+			if (mensajes.size() == 0) JOptionPane.showMessageDialog(null, "No existe ningún mensaje con ese ID", "ERROR", 2, preocupado);
+			else mensajes.forEach(System.out::println);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +44,7 @@ public class DBMensaje {
 
 	public void leerMensajes() {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM mensaje");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM mensaje");
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
@@ -69,68 +60,25 @@ public class DBMensaje {
 		}
 	}
 
-	public boolean comprobarId_origen(Gestor gestor) {
-		boolean existeId_origen = false;
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				origen.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
-			}
-
-			if (origen.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
-			} else {
-				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-				existeId_origen = true;
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public static boolean comprobarId(int id_gestor) {
+		List<Gestor> gestores = DBGestor.datosGestores().stream().filter(e->e.getId_gestor() == id_gestor).collect(Collectors.toList());
+		if (gestores.size() == 0) {
+			JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
 		}
-		return existeId_origen;
-	}
-
-	public boolean comprobarId_destino(Gestor gestor) {
-		boolean existeId_destino = false;
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE id=?");
-			statement.setInt(1, gestor.getId_gestor());
-
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				destino.add(new Gestor(resultados.getInt("id"), resultados.getString("nombre"),
-						resultados.getString("apellido"), resultados.getString("dni"), resultados.getString("usuario"),
-						resultados.getString("password"), resultados.getString("correo")));
-			}
-
-			if (destino.size() == 0) {
-				JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID", "ERROR", 0, preocupado);
-			} else {
-				JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
-				existeId_destino = true;
-
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		else {
+			JOptionPane.showMessageDialog(null, "Se encontró el gestor", "BÚSQUEDA FINALIZADA", 1);
+			return true;
 		}
-		return existeId_destino;
+		return false;
 	}
 
 	// Puede que sirva para el envío
 	public void enviarMensaje(Mensaje mensaje) {
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("INSERT INTO mensaje (id, id_origen, id_destino, texto, fecha)VALUES(?,?,?,?,?)");
+			PreparedStatement statement = con.prepareStatement("INSERT INTO mensaje (id, id_origen, id_destino, texto, fecha)VALUES(?,?,?,?,?)");
 			statement.setInt(1, mensaje.getId_mensaje());
-			statement.setInt(2, mensaje.getId_origen());
-			statement.setInt(3, mensaje.getId_destino());
+			statement.setInt(2, mensaje.getId_gestor());
+			statement.setInt(3, mensaje.getId_cliente());
 			statement.setString(4, mensaje.getTexto());
 			statement.setTimestamp(5, mensaje.getFecha());
 			statement.execute();

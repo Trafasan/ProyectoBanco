@@ -1,7 +1,7 @@
 package com.sandra.bancoDB.utilidades;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -14,19 +14,19 @@ public class UICliente {
 
 	// Comprobación previa de que existe el cliente con ese ID (tres métodos privados)
 	
-	private static int idMaxGestor(ArrayList<Integer> id_gestores) {
+	private static int idMaxGestor(List<Integer> id_gestores) {
 		id_gestores.sort(Collections.reverseOrder());
 		return id_gestores.get(0);
 	}
-	private static int getIdGestorAleatorio(ArrayList<Integer> id_gestores) {
+	private static int getIdGestorAleatorio(List<Integer> id_gestores) {
 		return new Random().nextInt(idMaxGestor(id_gestores));
 	}
-	private static boolean existeIdGestor(ArrayList<Integer> id_gestores, int idGestorAleatorio) {
+	private static boolean existeIdGestor(List<Integer> id_gestores, int idGestorAleatorio) {
 		for (int id:id_gestores) if (id == idGestorAleatorio) return true;
 		return false;
 	}
 	
-	public static Cliente addCliente(ArrayList<Integer> id_gestores) {
+	public static Cliente addCliente(List<Integer> id_gestores) {
 		int id_gestor;
 		boolean existeGestor;
 		do {
@@ -71,7 +71,7 @@ public class UICliente {
 			return 0;
 		}
 	}
-	public static boolean existeIdGestorUpdate(Cliente updateCliente, ArrayList<Integer> id_gestores, int id_gestor) {
+	public static boolean existeIdGestorUpdate(Cliente updateCliente, List<Integer> id_gestores, int id_gestor) {
 		for (int id:id_gestores) if (id == id_gestor) return true;
 		return false;
 	}

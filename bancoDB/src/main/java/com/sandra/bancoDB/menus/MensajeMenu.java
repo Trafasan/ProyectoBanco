@@ -3,8 +3,8 @@ package com.sandra.bancoDB.menus;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBMensaje;
-import com.sandra.bancoDB.entidades.Gestor;
 import com.sandra.bancoDB.utilidades.UIMensaje;
 
 public class MensajeMenu {
@@ -23,7 +23,7 @@ public class MensajeMenu {
 
 		switch (accion) {
 		case "Obtención de un mensaje" -> {
-			dbMensaje.leerUnMensaje(UIMensaje.obtencionMensaje());
+			dbMensaje.getMensaje(UIMensaje.obtencionMensaje());
 			switchMensaje();
 		}
 		case "Obtención de todos los mensajes" -> {
@@ -31,31 +31,25 @@ public class MensajeMenu {
 			switchMensaje();
 		}
 		case "Envío de un mensaje" -> {
-			boolean existeId_origen, existeId_destino;
-			Gestor comprobacionId_origen, comprobacionId_destino;
 			int id_origen, id_destino;
 			do {
 				do{
-					comprobacionId_origen = UIMensaje.comprobarId_origen();
-					id_origen = comprobacionId_origen.getId_gestor();
-					existeId_origen = dbMensaje.comprobarId_origen(comprobacionId_origen);
-				}while(existeId_origen == false);
+					id_origen = UIMensaje.comprobarId("remitente");
+				} while(!DBMensaje.comprobarId(id_origen));
 				
 				do{
-					comprobacionId_destino = UIMensaje.comprobarId_destino();
-					id_destino = comprobacionId_destino.getId_gestor();
-					existeId_destino = dbMensaje.comprobarId_destino(comprobacionId_destino);
-				}while(existeId_destino == false);
+					id_destino = UIMensaje.comprobarId("destinatario");
+				} while(!DBMensaje.comprobarId(id_destino));
 				
 				if(id_origen == id_destino) {
 					JOptionPane.showMessageDialog(null, "El gestor destinatario no puede ser el gestor remitente", "ERROR", 0, new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png"));
 				}
 			}while(id_origen == id_destino);
-			dbMensaje.enviarMensaje(UIMensaje.envíoMensaje(comprobacionId_origen, comprobacionId_destino));
+			dbMensaje.enviarMensaje(UIMensaje.addMensaje(id_origen, id_destino));
 			JOptionPane.showMessageDialog(null, "Envío realizado correctamente");
 			switchMensaje();
 		}
-		case "Volver atrás" -> MainMenu.opciones();
+		case "Volver atrás" ->  App.mainMenu();
 		}
 	}
 }

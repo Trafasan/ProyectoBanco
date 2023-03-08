@@ -1,28 +1,18 @@
 package com.sandra.bancoDB.menus;
 
-import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.sandra.bancoDB.App;
+import com.sandra.bancoDB.databases.DBCliente;
 import com.sandra.bancoDB.databases.DBRegistro;
 import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.entidades.Gestor;
 import com.sandra.bancoDB.utilidades.UIRegistro;
 
 public class RegistroMenu {
-	
-	public static int guardarIdMax() {
-		DBRegistro dbRegistro = new DBRegistro();
-		ArrayList<Gestor> id_gestores = dbRegistro.obtenerId_gestor();
-		int idMax = id_gestores.get(0).getId_gestor();
-		for (int x=1; x<id_gestores.size(); x++) {
-			if (idMax>id_gestores.get(x).getId_gestor()) {
-				idMax = id_gestores.get(x).getId_gestor();
-			}
-		}
-		return idMax;
-	}
 
 	public static void switchRegistro() {
 		DBRegistro dbRegistro = new DBRegistro();
@@ -40,7 +30,7 @@ public class RegistroMenu {
 			Gestor comprobarUsuarioG = UIRegistro.comprobarUsuarioG();
 			boolean existeUsuarioG = dbRegistro.comprobarUsuarioG(comprobarUsuarioG);
 			if (!existeUsuarioG) {
-				String usuario = comprobarUsuarioG.getActualizar();
+				String usuario = comprobarUsuarioG.getUpdateDato();
 				String password, comprobarPassword;
 				do {
 					password = UIRegistro.crearPassword();
@@ -48,7 +38,7 @@ public class RegistroMenu {
 					if(comprobarPassword.equals(password)) {
 						JOptionPane.showMessageDialog(null, "Ahora, inserte los datos restantes", "USUARIO CREADO CORRECTAMENTE", 1, null);
 						dbRegistro.crearGestor(UIRegistro.crearGestor(usuario, password));
-						MainMenu.opciones();
+						App.mainMenu();
 					} else {
 						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", 0, preocupado);
 					}
@@ -59,27 +49,26 @@ public class RegistroMenu {
 			Cliente comprobarUsuarioC = UIRegistro.comprobarUsuarioC();
 			boolean existeUsuarioC = dbRegistro.comprobarUsuarioC(comprobarUsuarioC);
 			if (!existeUsuarioC) {
-				String usuario = comprobarUsuarioC.getActualizar();
+				String usuario = comprobarUsuarioC.getUpdateDato();
 				String password, comprobarPassword;
 				do {
 					password = UIRegistro.crearPassword();
 					comprobarPassword = UIRegistro.comprobarPassword();
-					dbRegistro.obtenerId_gestor();
 					if(comprobarPassword.equals(password)) {
-						int idMax = guardarIdMax();
+						int idMax = Collections.max(DBCliente.getId_gestores());
 						JOptionPane.showMessageDialog(null, "Ahora, inserte los datos restantes", "USUARIO CREADO CORRECTAMENTE", 1, null);
 						Cliente nuevoCliente = UIRegistro.crearCliente(idMax, usuario, password);
 						dbRegistro.crearCliente(nuevoCliente);
 						dbRegistro.leerGestores();
 						JOptionPane.showMessageDialog(null, "Se le ha asignado al gestor "+nuevoCliente.getId_gestor()+" automáticamente.\nPara cambiarlo, contacte con uno de nuestros gestores.", "ADVERTENCIA", 2, null);
-						MainMenu.opciones();
+						App.mainMenu();
 					} else {
 						JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden", "ERROR", 0, preocupado);
 					}
 				} while (!comprobarPassword.equals(password));
 			} else switchRegistro();
 		}
-		case "Volver atrás" -> MainMenu.opciones();
+		case "Volver atrás" ->  App.mainMenu();
 		}
 	}
 }

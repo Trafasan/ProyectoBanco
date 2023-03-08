@@ -1,5 +1,6 @@
 package com.sandra.bancoDB.databases;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.entidades.Gestor;
 
 public class DBRegistro {
-	DBConnection connection = new DBConnection();
+	Connection con = DBConnection.conexion();
 	
 	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 	
@@ -23,9 +24,8 @@ public class DBRegistro {
 	public boolean comprobarUsuarioG(Gestor gestor) {
 		boolean existeUsuarioG = true;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
-			statement.setString(1, gestor.getActualizar());
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			statement.setString(1, gestor.getUpdateDato());
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
@@ -48,8 +48,7 @@ public class DBRegistro {
 	public String obtenerPasswordG(String usuario) {
 		String password = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -69,8 +68,7 @@ public class DBRegistro {
 	public String obtenerNombreG(String usuario) {
 		String nombre = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -90,8 +88,7 @@ public class DBRegistro {
 	public String obtenerApellidoG(String usuario) {
 		String apellido = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -111,9 +108,8 @@ public class DBRegistro {
 	public boolean comprobarUsuarioC(Cliente cliente) {
 		boolean existeUsuarioC = true;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
-			statement.setString(1, cliente.getActualizar());
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			statement.setString(1, cliente.getUpdateDato());
 
 			ResultSet resultados = statement.executeQuery();
 			while (resultados.next()) {
@@ -136,8 +132,7 @@ public class DBRegistro {
 	public String obtenerPasswordC(String usuario) {
 		String password = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -157,8 +152,7 @@ public class DBRegistro {
 	public String obtenerNombreC(String usuario) {
 		String nombre = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -178,8 +172,7 @@ public class DBRegistro {
 	public String obtenerApellidoC(String usuario) {
 		String apellido = null;
 		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM cliente WHERE usuario=?");
 			statement.setString(1, usuario);
 
 			ResultSet resultados = statement.executeQuery();
@@ -198,8 +191,7 @@ public class DBRegistro {
 	
 	public void crearGestor(Gestor gestor) {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement(
-					"INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
+			PreparedStatement statement = con.prepareStatement("INSERT INTO gestor (id, nombre, apellido, dni, usuario, password, correo)VALUES(?,?,?,?,?,?,?)");
 			statement.setInt(1, gestor.getId_gestor());
 			statement.setString(2, gestor.getNombre());
 			statement.setString(3, gestor.getApellido());
@@ -215,7 +207,7 @@ public class DBRegistro {
 	
 	public void crearCliente(Cliente cliente) {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement(
+			PreparedStatement statement = con.prepareStatement(
 					"INSERT INTO cliente (id, id_gestor, nombre, apellido, dni, usuario, password, correo, saldo)VALUES(?,?,?,?,?,?,?,?,?)");
 			statement.setInt(1, cliente.getId_cliente());
 			statement.setInt(2, cliente.getId_gestor());
@@ -234,7 +226,7 @@ public class DBRegistro {
 	
 	public void leerGestores() {
 		try {
-			PreparedStatement statement = connection.getConnection().prepareStatement("SELECT * FROM gestor");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM gestor");
 			ResultSet resultados = statement.executeQuery();
 
 			while (resultados.next()) {
@@ -247,21 +239,5 @@ public class DBRegistro {
 			e.printStackTrace();
 		}
 
-	}
-	
-	public ArrayList<Gestor> obtenerId_gestor() {
-		ArrayList<Gestor> id_gestores = new ArrayList<Gestor>();
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("SELECT * FROM cliente");
-
-			ResultSet resultados = statement.executeQuery();
-			while (resultados.next()) {
-				id_gestores.add(new Gestor(resultados.getInt("id")));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return id_gestores;
 	}
 }

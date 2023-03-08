@@ -18,8 +18,8 @@ public class Cliente extends Persona{
 		this.saldo = saldo;
 	}
 	
-	public Cliente(int id_cliente, String actualizar) {
-		super(actualizar);
+	public Cliente(int id_cliente, String updateDato) {
+		super(updateDato);
 		this.id_cliente = id_cliente;
 	}
 	
@@ -33,8 +33,8 @@ public class Cliente extends Persona{
 		this.saldo = saldo;
 	}
 	
-	public Cliente(String actualizar) {
-		super(actualizar);
+	public Cliente(String updateDato) {
+		super(updateDato);
 	}
 	
 	public Cliente(int id_cliente) {

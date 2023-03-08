@@ -3,6 +3,7 @@ package com.sandra.bancoDB.menus;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBCliente;
 import com.sandra.bancoDB.databases.DBTransferencia;
 import com.sandra.bancoDB.entidades.Cliente;
@@ -74,7 +75,7 @@ public class TransferenciaMenu {
 			}
 			switchTransferencia();
 		}
-		case "Volver atrás" -> MainMenu.opciones();
+		case "Volver atrás" -> App.mainMenu();
 		}
 	}
 }

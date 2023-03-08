@@ -3,6 +3,7 @@ package com.sandra.bancoDB.menus;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBLogin;
 import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.entidades.Gestor;
@@ -26,15 +27,15 @@ public class LoginMenu {
 			Gestor comprobarUsuarioG = UILogin.comprobarUsuarioG();
 			boolean existeUsuarioG = dbLogin.comprobarUsuarioG(comprobarUsuarioG);
 			if (existeUsuarioG == true) {
-				String usuario = comprobarUsuarioG.getActualizar();
+				String usuario = comprobarUsuarioG.getUpdateDato();
 				String password = dbLogin.obtenerPasswordG(usuario);
 				
 				Gestor comprobarPassword = UILogin.comprobarPasswordG();
-				if(comprobarPassword.getActualizar().equals(password)) {
+				if(comprobarPassword.getUpdateDato().equals(password)) {
 					String nombre = dbLogin.obtenerNombreG(usuario);
 					String apellido= dbLogin.obtenerApellidoG(usuario);
 					JOptionPane.showMessageDialog(null, "Bienvenid@, "+nombre+" "+apellido);
-					MainMenu.opciones();
+					 App.mainMenu();
 				} else {
 					JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "ERROR", 0, preocupado);
 					switchLogin();
@@ -46,11 +47,11 @@ public class LoginMenu {
 			Cliente comprobarUsuarioC = UILogin.comprobarUsuarioC();
 			boolean existeUsuarioC = dbLogin.comprobarUsuarioC(comprobarUsuarioC);
 			if (existeUsuarioC == true) {
-				String usuario = comprobarUsuarioC.getActualizar();
+				String usuario = comprobarUsuarioC.getUpdateDato();
 				String password = dbLogin.obtenerPasswordC(usuario);
 				
 				Cliente comprobarPassword = UILogin.comprobarPasswordC();
-				if(comprobarPassword.getActualizar().equals(password)) {
+				if(comprobarPassword.getUpdateDato().equals(password)) {
 					String nombre = dbLogin.obtenerNombreC(usuario);
 					String apellido= dbLogin.obtenerApellidoC(usuario);
 					JOptionPane.showMessageDialog(null, "Bienvenid@, "+nombre+" "+apellido);
@@ -58,9 +59,9 @@ public class LoginMenu {
 					JOptionPane.showMessageDialog(null, "Contraseña incorrecta", "ERROR", 0, preocupado);
 				}
 			}
-			MainMenu.opciones();
+			App.mainMenu();
 		}
-		case "Volver atrás" -> MainMenu.opciones();
+		case "Volver atrás" ->  App.mainMenu();
 		}
 	}
 }

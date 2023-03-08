@@ -24,19 +24,19 @@ public class ClienteUpdateMenu {
 		switch (update) {
 		case "ID del gestor" -> {
 			int id_gestor = UICliente.setId_gestorUpdate(updateCliente);
-			if (UICliente.existeIdGestorUpdate(updateCliente, dbCliente.getGestores(), id_gestor)) {
-				dbCliente.updateId_gestorCliente(UICliente.updateId_gestorCliente(updateCliente, id_gestor));
+			if (UICliente.existeIdGestorUpdate(updateCliente, DBCliente.getId_gestores(), id_gestor)) {
+				dbCliente.updateDatoCilente(UICliente.updateId_gestorCliente(updateCliente, id_gestor), "id_gestor");
 				JOptionPane.showMessageDialog(null, "ID del gestor actualizada correctamente");
 			}
 			else JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Cliente", "ERROR", 0, new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png"));
 		} // Me he quedado por aquí en mi revisión
-		case "Nombre" -> dbCliente.updateNombreCliente(UICliente.updateNombreCliente(updateCliente));
-		case "Apellido(s)" -> dbCliente.updateApellidoCliente(UICliente.updateApellidoCliente(updateCliente));
-		case "DNI" -> dbCliente.updateDniCliente(UICliente.updateDniCliente(updateCliente));
-		case "Usuario" -> dbCliente.updateUsuarioCliente(UICliente.updateUsuarioCliente(updateCliente));
-		case "Contraseña" -> dbCliente.updatePasswordCliente(UICliente.updateUsuarioCliente(updateCliente));
-		case "Correo" -> dbCliente.updateCorreoCliente(UICliente.updateCorreoCliente(updateCliente));
-		case "Saldo" -> dbCliente.updateSaldoCliente(UICliente.updateSaldoCliente(updateCliente));
+		case "Nombre" -> dbCliente.updateDatoCilente(UICliente.updateNombreCliente(updateCliente), "nombre");
+		case "Apellido(s)" -> dbCliente.updateDatoCilente(UICliente.updateApellidoCliente(updateCliente), "apellido");
+		case "DNI" -> dbCliente.updateDatoCilente(UICliente.updateDniCliente(updateCliente), "dni");
+		case "Usuario" -> dbCliente.updateDatoCilente(UICliente.updateUsuarioCliente(updateCliente), "usuario");
+		case "Contraseña" -> dbCliente.updateDatoCilente(UICliente.updateUsuarioCliente(updateCliente), "password");
+		case "Correo" -> dbCliente.updateDatoCilente(UICliente.updateCorreoCliente(updateCliente), "correo");
+		case "Saldo" -> dbCliente.updateDatoCilente(UICliente.updateSaldoCliente(updateCliente), "saldo");
 		}
 		if (!update.equals("ID del gestor") && !update.equals("Contraseña") && !update.equals("Volver atrás")) JOptionPane.showMessageDialog(null, update+" actualizado"+((update.equals("Apellido(s)")) ? "(s)": "")+" correctamente");
 		if (!update.equals("Volver atrás")) switchUpdateCliente(updateCliente);

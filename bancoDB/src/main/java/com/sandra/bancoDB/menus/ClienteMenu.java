@@ -3,6 +3,7 @@ package com.sandra.bancoDB.menus;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBCliente;
 import com.sandra.bancoDB.entidades.Cliente;
 import com.sandra.bancoDB.utilidades.UICliente;
@@ -10,7 +11,6 @@ import com.sandra.bancoDB.utilidades.UICliente;
 public class ClienteMenu {
 
 	public static void switchCliente() {
-		DBCliente dbCliente = new DBCliente();
 		boolean existeCliente;
 		Cliente comprobacionCliente;
 		String accion;
@@ -26,14 +26,14 @@ public class ClienteMenu {
 
 		switch (accion) {
 		case "Inserción de un cliente" -> {
-			dbCliente.addCliente(UICliente.addCliente(dbCliente.getGestores()));
+			DBCliente.addCliente(UICliente.addCliente(DBCliente.getId_gestores()));
 			JOptionPane.showMessageDialog(null, "Inserción realizada correctamente");
 		}
-		case "Obtención de un cliente" -> dbCliente.getCliente(UICliente.getCliente("a obtener"));
-		case "Obtención de todos los clientes" -> dbCliente.getClientes();
+		case "Obtención de un cliente" -> DBCliente.getCliente(UICliente.getCliente("a obtener"));
+		case "Obtención de todos los clientes" -> DBCliente.getClientes();
 		case "Actualización de un cliente" -> {
 			Cliente updateCliente = UICliente.getCliente("que quieres modificar");
-			if (dbCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateMenu.switchUpdateCliente(updateCliente);
+			if (DBCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateMenu.switchUpdateCliente(updateCliente);
 		}
 		case "Eliminación de un cliente" -> {
 			do {
@@ -51,13 +51,13 @@ public class ClienteMenu {
 			}
 			switch (confirmacion) {
 			case 0 -> {
-				dbCliente.borrarCliente(comprobacionCliente);
+				DBCliente.borrarCliente(comprobacionCliente);
 				JOptionPane.showMessageDialog(null, "Eliminación realizada correctamente");
 			}
 			case 1 -> JOptionPane.showMessageDialog(null, "No se ha eliminado el cliente " + comprobacionCliente.getId_cliente());
 			}
 		}
-		case "Volver atrás" -> MainMenu.opciones();
+		case "Volver atrás" -> App.mainMenu();
 		}
 		if (!accion.equals("Volver atrás")) switchCliente();
 	}
