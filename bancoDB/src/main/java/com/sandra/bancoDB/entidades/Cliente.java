@@ -1,4 +1,4 @@
-package com.sandra.bancoDB.models;
+package com.sandra.bancoDB.entidades;
 
 public class Cliente extends Persona{
 	private int id_cliente;

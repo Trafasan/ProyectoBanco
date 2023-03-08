@@ -1,19 +1,18 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBLogin;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UILogin;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UILogin;
 
-public class LoginController {
+public class LoginMenu {
 
 	public static void switchLogin() {
 		DBLogin dbLogin = new DBLogin();
-		ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+		ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 		String accion;
 		try {
 			accion = JOptionPane.showInputDialog(null, "Seleccione su tipo de cuenta: ", "MENÚ LOGIN",

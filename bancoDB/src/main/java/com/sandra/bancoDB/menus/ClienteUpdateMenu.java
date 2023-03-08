@@ -1,13 +1,13 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBCliente;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.utils.UICliente;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.utilidades.UICliente;
 
-public class ClienteUpdateController {
+public class ClienteUpdateMenu {
 
 	public static void switchUpdateCliente(Cliente updateCliente) {
 		DBCliente dbCliente = new DBCliente();
@@ -28,7 +28,7 @@ public class ClienteUpdateController {
 				dbCliente.updateId_gestorCliente(UICliente.updateId_gestorCliente(updateCliente, id_gestor));
 				JOptionPane.showMessageDialog(null, "ID del gestor actualizada correctamente");
 			}
-			else JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Cliente", "ERROR", 0, new ImageIcon("src/images/preocupado.png"));
+			else JOptionPane.showMessageDialog(null, "No existe ningún gestor con ese ID\nSe le redigirá al menú Cliente", "ERROR", 0, new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png"));
 		} // Me he quedado por aquí en mi revisión
 		case "Nombre" -> dbCliente.updateNombreCliente(UICliente.updateNombreCliente(updateCliente));
 		case "Apellido(s)" -> dbCliente.updateApellidoCliente(UICliente.updateApellidoCliente(updateCliente));

@@ -1,10 +1,10 @@
-package com.sandra.bancoDB.utils;
+package com.sandra.bancoDB.utilidades;
 
 import javax.swing.JOptionPane;
 
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UILogin;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UILogin;
 
 public class UILogin {
 	public static Gestor comprobarUsuarioG() {

@@ -1,12 +1,12 @@
-package com.sandra.bancoDB.utils;
+package com.sandra.bancoDB.utilidades;
 
 import java.sql.Timestamp;
 
 import javax.swing.JOptionPane;
 
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.models.Mensaje;
-import com.sandra.bancoDB.utils.UIMensaje;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.entidades.Mensaje;
+import com.sandra.bancoDB.utilidades.UIMensaje;
 
 public class UIMensaje {
 	// 12. Obtención de un mensaje

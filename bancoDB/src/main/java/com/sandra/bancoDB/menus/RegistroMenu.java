@@ -1,4 +1,4 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBRegistro;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UIRegistro;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UIRegistro;
 
-public class RegistroController {
+public class RegistroMenu {
 	
 	public static int guardarIdMax() {
 		DBRegistro dbRegistro = new DBRegistro();
@@ -27,7 +26,7 @@ public class RegistroController {
 
 	public static void switchRegistro() {
 		DBRegistro dbRegistro = new DBRegistro();
-		ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+		ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 		String accion;
 		try {
 			accion = JOptionPane.showInputDialog(null, "Seleccione el tipo de cuenta que quiere crear: ", "MENÚ REGISTRO",

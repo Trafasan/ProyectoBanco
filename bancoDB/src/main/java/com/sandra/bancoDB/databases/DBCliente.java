@@ -9,13 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.connection.DBConnection;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Gestor;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Gestor;
 
 public class DBCliente {
 	DBConnection connection = new DBConnection();
 
-	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 
 	ArrayList<Gestor> gestores = new ArrayList<Gestor>();
 	ArrayList<Cliente> clientes = new ArrayList<Cliente>();

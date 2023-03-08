@@ -1,14 +1,13 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBMensaje;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UIMensaje;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UIMensaje;
 
-public class MensajeController {
+public class MensajeMenu {
 
 	public static void switchMensaje() {
 		DBMensaje dbMensaje = new DBMensaje();
@@ -49,7 +48,7 @@ public class MensajeController {
 				}while(existeId_destino == false);
 				
 				if(id_origen == id_destino) {
-					JOptionPane.showMessageDialog(null, "El gestor destinatario no puede ser el gestor remitente", "ERROR", 0, new ImageIcon("src/images/preocupado.png"));
+					JOptionPane.showMessageDialog(null, "El gestor destinatario no puede ser el gestor remitente", "ERROR", 0, new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png"));
 				}
 			}while(id_origen == id_destino);
 			dbMensaje.enviarMensaje(UIMensaje.envíoMensaje(comprobacionId_origen, comprobacionId_destino));

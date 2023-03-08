@@ -1,4 +1,4 @@
-package com.sandra.bancoDB.utils;
+package com.sandra.bancoDB.utilidades;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,8 +6,8 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.utils.UICliente;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.utilidades.UICliente;
 
 public class UICliente {
 	// Inserción de un cliente

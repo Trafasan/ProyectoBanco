@@ -1,12 +1,12 @@
-package com.sandra.bancoDB.utils;
+package com.sandra.bancoDB.utilidades;
 
 import java.sql.Timestamp;
 
 import javax.swing.JOptionPane;
 
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Transferencia;
-import com.sandra.bancoDB.utils.UITransferencia;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Transferencia;
+import com.sandra.bancoDB.utilidades.UITransferencia;
 
 public class UITransferencia {
 	// 15. Obtención de una transferencia

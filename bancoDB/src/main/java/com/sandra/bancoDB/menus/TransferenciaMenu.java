@@ -1,21 +1,20 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBCliente;
 import com.sandra.bancoDB.databases.DBTransferencia;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.utils.UITransferencia;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.utilidades.UITransferencia;
 
-public class TransferenciaController {
+public class TransferenciaMenu {
 
 	public static void switchTransferencia() {
 		DBCliente dbCliente = new DBCliente();
 		DBTransferencia dbTransferencia = new DBTransferencia();
 		
-		ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+		ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 		
 		String accion;
 		try {
@@ -69,7 +68,7 @@ public class TransferenciaController {
 				dbCliente.updateSaldoTransferencia(comprobacionId_ordenante, saldoOrdenante);
 				dbCliente.updateSaldoTransferencia(comprobacionId_beneficiario, saldoBeneficiario);
 				
-				ImageIcon dinero = new ImageIcon("src/images/dinero.png");
+				ImageIcon dinero = new ImageIcon("src/main/java/com/sandra/bancoDB/images/dinero.png");
 			    JOptionPane.showMessageDialog(null, "Nuevo saldo del cliente ordenante (ID: "+id_ordenante+"): "+saldoOrdenante+"€"
 						+ "\nNuevo saldo del cliente beneficiario (ID: "+id_beneficiario+"): "+saldoBeneficiario+"€", "TRANSFERENCIA REALIZADA CORRECTAMENTE", 1, dinero);
 			}

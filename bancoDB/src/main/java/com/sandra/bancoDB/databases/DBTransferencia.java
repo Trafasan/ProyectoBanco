@@ -9,13 +9,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.connection.DBConnection;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.models.Transferencia;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.entidades.Transferencia;
 
 public class DBTransferencia {
 	DBConnection connection = new DBConnection();
 
-	ImageIcon preocupado = new ImageIcon("src/images/preocupado.png");
+	ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 
 	ArrayList<Cliente> ordenante = new ArrayList<Cliente>();
 	ArrayList<Cliente> beneficiario = new ArrayList<Cliente>();

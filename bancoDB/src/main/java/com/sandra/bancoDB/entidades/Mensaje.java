@@ -1,4 +1,4 @@
-package com.sandra.bancoDB.models;
+package com.sandra.bancoDB.entidades;
 
 import java.sql.Timestamp;
 

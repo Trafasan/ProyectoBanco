@@ -1,13 +1,12 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBGestor;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UIGestor;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UIGestor;
 
-public class GestorController {
+public class GestorMenu {
 
 	public static void switchGestor() {
 		DBGestor dbGestor = new DBGestor();
@@ -36,7 +35,7 @@ public class GestorController {
 		case "Obtención de todos los gestores" -> dbGestor.getGestores();
 		case "Actualización de un gestor" -> {
 			Gestor updateGestor = UIGestor.getGestor("que quieres modificar");
-			if (dbGestor.existeGestor(updateGestor) && updateGestor != null) GestorUpdateController.switchUpdateGestor(updateGestor);
+			if (dbGestor.existeGestor(updateGestor) && updateGestor != null) GestorUpdateMenu.switchUpdateGestor(updateGestor);
 		}
 		case "Eliminación de un gestor" -> {
 			Gestor updateGestor = UIGestor.getGestor("que quieres eliminar");

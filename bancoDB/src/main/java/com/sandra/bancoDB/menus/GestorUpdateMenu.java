@@ -1,12 +1,12 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBGestor;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UIGestor;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UIGestor;
 
-public class GestorUpdateController {
+public class GestorUpdateMenu {
 
 	public static void switchUpdateGestor(Gestor updateGestor) {
 		DBGestor dbGestor = new DBGestor();

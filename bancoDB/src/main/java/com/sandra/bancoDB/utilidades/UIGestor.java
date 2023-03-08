@@ -1,11 +1,11 @@
-package com.sandra.bancoDB.utils;
+package com.sandra.bancoDB.utilidades;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBGestor;
-import com.sandra.bancoDB.models.Gestor;
-import com.sandra.bancoDB.utils.UIGestor;
+import com.sandra.bancoDB.entidades.Gestor;
+import com.sandra.bancoDB.utilidades.UIGestor;
 
 public class UIGestor {
 	// Inserción de un gestor
@@ -72,7 +72,7 @@ public class UIGestor {
 			try {
 				confirmacion = JOptionPane.showConfirmDialog(null,
 						"¿Seguro que quieres eliminar al gestor " + updateGestor.getId_gestor() + "?",
-						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/images/eliminar.png"));
+						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/main/java/com/sandra/bancoDB/images/eliminar.png"));
 			} catch (Exception e) {
 				confirmacion = 1;
 			}

@@ -1,14 +1,13 @@
-package com.sandra.bancoDB.controllers;
+package com.sandra.bancoDB.menus;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBCliente;
-import com.sandra.bancoDB.functions.MainMenu;
-import com.sandra.bancoDB.models.Cliente;
-import com.sandra.bancoDB.utils.UICliente;
+import com.sandra.bancoDB.entidades.Cliente;
+import com.sandra.bancoDB.utilidades.UICliente;
 
-public class ClienteController {
+public class ClienteMenu {
 
 	public static void switchCliente() {
 		DBCliente dbCliente = new DBCliente();
@@ -34,7 +33,7 @@ public class ClienteController {
 		case "Obtención de todos los clientes" -> dbCliente.getClientes();
 		case "Actualización de un cliente" -> {
 			Cliente updateCliente = UICliente.getCliente("que quieres modificar");
-			if (dbCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateController.switchUpdateCliente(updateCliente);
+			if (dbCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateMenu.switchUpdateCliente(updateCliente);
 		}
 		case "Eliminación de un cliente" -> {
 			do {
@@ -46,7 +45,7 @@ public class ClienteController {
 			try {
 				confirmacion = JOptionPane.showConfirmDialog(null,
 						"¿Seguro que quieres eliminar al cliente " + comprobacionCliente.getId_cliente() + "?",
-						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/images/eliminar.png"));
+						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/main/java/com/sandra/bancoDB/images/eliminar.png"));
 			} catch (Exception e) {
 				confirmacion = 1;
 			}
