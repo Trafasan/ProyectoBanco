@@ -90,70 +90,10 @@ public class DBGestor {
 		return false;
 	}
 
-	public void updateNombreGestor(Gestor gestor) {
+	public void updateDatoGestor(Gestor gestor, String dato) {
 		try {
 			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET nombre=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateApellidoGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET apellido=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateDniGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET dni=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateUsuarioGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET usuario=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updatePasswordGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET password=? WHERE id=?");
-			statement.setString(1, gestor.getActualizar());
-			statement.setInt(2, gestor.getId_gestor());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void updateCorreoGestor(Gestor gestor) {
-		try {
-			PreparedStatement statement = connection.getConnection()
-					.prepareStatement("UPDATE gestor SET correo=? WHERE id=?");
+					.prepareStatement("UPDATE gestor SET "+dato+"=? WHERE id=?");
 			statement.setString(1, gestor.getActualizar());
 			statement.setInt(2, gestor.getId_gestor());
 			statement.executeUpdate();

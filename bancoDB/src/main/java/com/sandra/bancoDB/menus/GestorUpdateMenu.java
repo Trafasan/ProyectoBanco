@@ -21,18 +21,18 @@ public class GestorUpdateMenu {
 		}
 
 		switch (update) {
-		case "Nombre" -> dbGestor.updateNombreGestor(UIGestor.updateGestor(updateGestor, "el nuevo nombre", id));
-		case "Apellido(s)" -> dbGestor.updateApellidoGestor(UIGestor.updateGestor(updateGestor, "el(los) nuevo(s) apellido(s)", id));
-		case "DNI" -> dbGestor.updateDniGestor(UIGestor.updateGestor(updateGestor, "el nuevo DNI", id));
-		case "Usuario" -> dbGestor.updateUsuarioGestor(UIGestor.updateGestor(updateGestor, "el nuevo usuario", id));
+		case "Nombre" -> dbGestor.updateDatoGestor(UIGestor.updateGestor(updateGestor, "el nuevo nombre", id), "nombre");
+		case "Apellido(s)" -> dbGestor.updateDatoGestor(UIGestor.updateGestor(updateGestor, "el(los) nuevo(s) apellido(s)", id), "apellido");
+		case "DNI" -> dbGestor.updateDatoGestor(UIGestor.updateGestor(updateGestor, "el nuevo DNI", id), "dni");
+		case "Usuario" -> dbGestor.updateDatoGestor(UIGestor.updateGestor(updateGestor, "el nuevo usuario", id), "usuario");
 		case "Contraseña" -> {
 			String password = UIGestor.nuevoPassword("Introduzca la nueva contraseña", "ACTUALIZACIÓN DEL GESTOR " + id, 1);
 			if (password != null) {
-				dbGestor.updatePasswordGestor(UIGestor.updatePasswordGestor(updateGestor, password, id));
+				dbGestor.updateDatoGestor(UIGestor.updatePasswordGestor(updateGestor, password, id), "password");
 				JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente");
 			}
 		}
-		case "Correo" -> dbGestor.updateCorreoGestor(UIGestor.updateGestor(updateGestor, "el nuevo correo", id));
+		case "Correo" -> dbGestor.updateDatoGestor(UIGestor.updateGestor(updateGestor, "el nuevo correo", id), "correo");
 		}
 		if (!update.equals("Contraseña") && !update.equals("Volver atrás")) JOptionPane.showMessageDialog(null, update+" actualizado"+((update.equals("Apellido(s)")) ? "(s)": "")+" correctamente");
 		if (!update.equals("Volver atrás")) switchUpdateGestor(updateGestor);
