@@ -8,15 +8,15 @@ import com.sandra.bancoDB.entidades.Mensaje;
 import com.sandra.bancoDB.utilidades.UIMensaje;
 
 public class UIMensaje {
-	// 12. Obtención de un mensaje
-	public static Mensaje obtencionMensaje() {
-		return new Mensaje(Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del mensaje a obtener: ")));
+	// Obtención de un mensaje
+	public static int getMensaje() {
+		return Integer.parseInt(JOptionPane.showInputDialog("Inserte el ID del mensaje a obtener: "));
 	}
 
-	// 14. Envío de un mensaje
-	// Comprobación previa de que existe el gestor con ese ID (origen y destino)
-	public static int comprobarId(String tipoGestor) {
-		return Integer.parseInt(JOptionPane.showInputDialog(null, "Introduzca el ID del gestor "+tipoGestor+":", "ENVÍO DEL MENSAJE", 1));
+	// Envío de un mensaje
+	// Comprobación previa de que existen las personas con ese ID (gestor y cliente)
+	public static int comprobarId(String persona) {
+		return Integer.parseInt(JOptionPane.showInputDialog(null, "Introduzca el ID del "+persona+":", "ENVÍO DEL MENSAJE", 1));
 	}
 
 	public static Mensaje addMensaje(int id_origen, int id_destino) {

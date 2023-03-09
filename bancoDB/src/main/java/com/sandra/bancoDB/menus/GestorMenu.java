@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBGestor;
-import com.sandra.bancoDB.utilidades.UIGestor;
+import com.sandra.bancoDB.utilidades.UIGestorCliente;
 
 public class GestorMenu {
 
@@ -19,26 +19,24 @@ public class GestorMenu {
 		} catch (NullPointerException e) {
 			accion = "Volver atrás";
 		}
-
+		
 		switch (accion) {
-		case "Inserción de un gestor" -> {
-			DBGestor.addGestor(UIGestor.addGestor());
-			JOptionPane.showMessageDialog(null, "Inserción realizada correctamente");
-		}
+		case "Inserción de un gestor" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.addGestor(UIGestorCliente.addGestor())) ? "Inserción realizada correctamente":"No se ha podido insertar el gestor");
 		case "Inserción de varios gestores" -> {
 			int n = Integer.parseInt(JOptionPane.showInputDialog("Inserte el número de gestores a añadir:"));
-			for (int i=0; i<n; i++) DBGestor.addGestor(UIGestor.addGestores());
+			for (int i=0; i<n; i++) DBGestor.addGestor(UIGestorCliente.addGestores());
 			JOptionPane.showMessageDialog(null, "Inserciones realizada correctamente");
 		}
-		case "Obtención de un gestor" -> DBGestor.getGestor(UIGestor.getId_gestor("a obtener"));
+		case "Obtención de un gestor" -> DBGestor.getGestor(UIGestorCliente.getId("Introduzca el ID del gestor a obtener: ", "Input", 3));
 		case "Obtención de todos los gestores" -> DBGestor.getGestores();
 		case "Actualización de un gestor" -> {
-			int id_gestor = UIGestor.getId_gestor("que quieres modificar");
-			if (DBGestor.existeGestor(id_gestor) && id_gestor != -1) GestorUpdateMenu.switchUpdateGestor(id_gestor);
+			int id_gestor = UIGestorCliente.getId("Introduzca el ID del gestor que quieres modificar: ", "Input", 3);
+			if (DBGestor.existeGestor(id_gestor)) GestorUpdateMenu.switchUpdateGestor(id_gestor);
 		}
 		case "Eliminación de un gestor" -> {
-			int id_gestor = UIGestor.getId_gestor("que quieres eliminar");
-			if (DBGestor.existeGestor(id_gestor)) UIGestor.deleteGestor(id_gestor);
+			int id_gestor = UIGestorCliente.getId("Introduzca el ID del gestor que quieres eliminar: ", "Input", 3);
+			if (DBGestor.existeGestor(id_gestor)) UIGestorCliente.delete("gestor", id_gestor);
 		}
 		case "Volver atrás" -> App.mainMenu();
 		}

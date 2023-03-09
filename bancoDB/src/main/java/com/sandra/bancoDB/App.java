@@ -28,7 +28,6 @@ public class App {
 	    } catch (NullPointerException e){
 	    	JOptionPane.showMessageDialog(null, "Gracias por usar este programa", "HASTA PRONTO", 1, new ImageIcon("src/main/java/com/sandra/bancoDB/images/gracias.png"));
 	    }
-		
 	}
 	
     public static void main(String[] args) {

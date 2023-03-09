@@ -1,18 +1,14 @@
 package com.sandra.bancoDB.menus;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.App;
 import com.sandra.bancoDB.databases.DBCliente;
-import com.sandra.bancoDB.entidades.Cliente;
-import com.sandra.bancoDB.utilidades.UICliente;
+import com.sandra.bancoDB.utilidades.UIGestorCliente;
 
 public class ClienteMenu {
 
 	public static void switchCliente() {
-		boolean existeCliente;
-		Cliente comprobacionCliente;
 		String accion;
 		try {
 			accion = JOptionPane
@@ -25,37 +21,17 @@ public class ClienteMenu {
 		}
 
 		switch (accion) {
-		case "Inserción de un cliente" -> {
-			DBCliente.addCliente(UICliente.addCliente(DBCliente.getId_gestores()));
-			JOptionPane.showMessageDialog(null, "Inserción realizada correctamente");
-		}
-		case "Obtención de un cliente" -> DBCliente.getCliente(UICliente.getCliente("a obtener"));
+		case "Inserción de un cliente" -> JOptionPane.showMessageDialog(null,(DBCliente.addCliente(UIGestorCliente.addCliente(
+				DBCliente.getId_gestores()))) ? "Inserción realizada correctamente":"No se ha podido insertar el cliente");
+		case "Obtención de un cliente" -> DBCliente.getCliente(UIGestorCliente.getId("Introduzca el ID del cliente a obtener: ", "Input", 3));
 		case "Obtención de todos los clientes" -> DBCliente.getClientes();
 		case "Actualización de un cliente" -> {
-			Cliente updateCliente = UICliente.getCliente("que quieres modificar");
-			if (DBCliente.existeCliente(updateCliente) && updateCliente != null) ClienteUpdateMenu.switchUpdateCliente(updateCliente);
+			int id_cliente = UIGestorCliente.getId("Introduzca el ID del cliente que quieres modificar: ", "Input", 3);
+			if (DBCliente.existeCliente(id_cliente)) ClienteUpdateMenu.switchUpdateCliente(id_cliente);
 		}
 		case "Eliminación de un cliente" -> {
-			do {
-				comprobacionCliente = UICliente.comprobarCliente();
-				// existeCliente = dbCliente.comprobarCliente(comprobacionCliente);
-				existeCliente = true;
-			}while(existeCliente == false);
-			int confirmacion;
-			try {
-				confirmacion = JOptionPane.showConfirmDialog(null,
-						"¿Seguro que quieres eliminar al cliente " + comprobacionCliente.getId_cliente() + "?",
-						"MENSAJE DE CONFIRMACIÓN", 0, 3, new ImageIcon("src/main/java/com/sandra/bancoDB/images/eliminar.png"));
-			} catch (Exception e) {
-				confirmacion = 1;
-			}
-			switch (confirmacion) {
-			case 0 -> {
-				DBCliente.borrarCliente(comprobacionCliente);
-				JOptionPane.showMessageDialog(null, "Eliminación realizada correctamente");
-			}
-			case 1 -> JOptionPane.showMessageDialog(null, "No se ha eliminado el cliente " + comprobacionCliente.getId_cliente());
-			}
+			int id_cliente = UIGestorCliente.getId("Introduzca el ID del cliente que quieres eliminar: ", "Input", 3);
+			if (DBCliente.existeCliente(id_cliente)) UIGestorCliente.delete("cliente", id_cliente);
 		}
 		case "Volver atrás" -> App.mainMenu();
 		}

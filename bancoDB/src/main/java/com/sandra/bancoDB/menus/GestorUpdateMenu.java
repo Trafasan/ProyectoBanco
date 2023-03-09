@@ -3,10 +3,9 @@ package com.sandra.bancoDB.menus;
 import javax.swing.JOptionPane;
 
 import com.sandra.bancoDB.databases.DBGestor;
-import com.sandra.bancoDB.utilidades.UIGestor;
+import com.sandra.bancoDB.utilidades.UIGestorCliente;
 
 public class GestorUpdateMenu {
-
 	public static void switchUpdateGestor(int id) {
 		String update;
 		try {
@@ -18,20 +17,28 @@ public class GestorUpdateMenu {
 		}
 
 		switch (update) {
-		case "Nombre" -> DBGestor.updateDatoGestor(UIGestor.updateGestor("el nuevo nombre", id), "nombre");
-		case "Apellido(s)" -> DBGestor.updateDatoGestor(UIGestor.updateGestor("el(los) nuevo(s) apellido(s)", id), "apellido");
-		case "DNI" -> DBGestor.updateDatoGestor(UIGestor.updateGestor("el nuevo DNI", id), "dni");
-		case "Usuario" -> DBGestor.updateDatoGestor(UIGestor.updateGestor("el nuevo usuario", id), "usuario");
+		case "Nombre" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.updateDatoGestor(UIGestorCliente.updateGestor("el nuevo nombre", id), "nombre")) ?
+						"Nombre actualizado correctamente":"No se ha podido actualizar el nombre");
+		case "Apellido(s)" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.updateDatoGestor(UIGestorCliente.updateGestor("el(los) nuevo(s) apellido(s)", id), "apellido")) ?
+						"Apellido(s) actualizado(s) correctamente":"No se ha podido actualizar el(los) apellido(s)");
+		case "DNI" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.updateDatoGestor(UIGestorCliente.updateGestor("el nuevo DNI", id), "dni")) ?
+						"DNI actualizado correctamente":"No se ha podido actualizar el DNI");
+		case "Usuario" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.updateDatoGestor(UIGestorCliente.updateGestor("el nuevo usuario", id), "usuario")) ?
+						"Usuario actualizado correctamente":"No se ha podido actualizar el usuario");
 		case "Contraseña" -> {
-			String password = UIGestor.nuevoPassword("Introduzca la nueva contraseña", "ACTUALIZACIÓN DEL GESTOR " + id, 1);
-			if (password != null) {
-				DBGestor.updateDatoGestor(UIGestor.updatePasswordGestor(password, id), "password");
-				JOptionPane.showMessageDialog(null, "Contraseña actualizada correctamente");
-			}
+			String password = UIGestorCliente.nuevoPassword("Introduzca la nueva contraseña", "ACTUALIZACIÓN DEL GESTOR " + id, 1);
+			JOptionPane.showMessageDialog(null,
+					(DBGestor.updateDatoGestor(UIGestorCliente.updatePasswordGestor(password, id), "password")) ?
+							"Contraseña actualizada correctamente":"No se ha podido actualizar la contraseña");
 		}
-		case "Correo" -> DBGestor.updateDatoGestor(UIGestor.updateGestor("el nuevo correo", id), "correo");
+		case "Correo" -> JOptionPane.showMessageDialog(null,
+				(DBGestor.updateDatoGestor(UIGestorCliente.updateGestor("el nuevo correo", id), "correo")) ?
+						"Correo actualizado correctamente":"No se ha podido actualizar el correo");
 		}
-		if (!update.equals("Contraseña") && !update.equals("Volver atrás")) JOptionPane.showMessageDialog(null, update+" actualizado"+((update.equals("Apellido(s)")) ? "(s)": "")+" correctamente");
 		if (!update.equals("Volver atrás")) switchUpdateGestor(id);
 	}
 }
