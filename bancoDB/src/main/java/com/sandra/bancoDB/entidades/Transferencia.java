@@ -1,6 +1,7 @@
 package com.sandra.bancoDB.entidades;
 
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 
 public class Transferencia {
 	private int id_transferencia;
@@ -54,4 +55,15 @@ public class Transferencia {
 
 	public Timestamp getFecha() {return fecha;}
 	public void setFecha(Timestamp fecha) {this.fecha = fecha;}
+
+	@Override
+	public String toString() {
+		return "Datos de la transferencia "+id_transferencia+"\n"
+				+"ID de la transferencia: "+id_transferencia+"\n"
+				+"ID del ordenante: "+id_ordenante+"\n"
+				+"ID del beneficiario: "+id_beneficiario+"\n"
+				+"Importe: "+importe+"\n"
+				+"Concepto: "+concepto+"\n"
+				+"Fecha: "+fecha.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+	}
 }
