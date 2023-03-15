@@ -18,7 +18,7 @@ public class DatabaseUtils {
 	
 	private final static String URI = "jdbc:mysql://localhost:3306/banco";
 	private final static String USER = "root";
-	private final static String PASSWORD = "trafasan";
+	private final static String PASSWORD = "";
 	
 	private static ImageIcon preocupado = new ImageIcon("src/main/java/com/sandra/bancoDB/images/preocupado.png");
 	
