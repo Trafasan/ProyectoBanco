@@ -17,8 +17,8 @@ public class App {
     			new Gestor("Jordi", "Fontanarrosa", "98765432Z", "2468", "correoG2@gmail.com", "Elche"));
     	// Añadir clientes (el cliente se añade automáticamente a la lista del gestor, pero no se elimina de la lista del anterior)
     	Collections.addAll(Cliente.clientes,
-    			new Cliente("Alejandro", "Planelles", "24680135G", "4728", "correoC1@gmail.com", Gestor.gestores.get(0)),
-    			new Cliente("María", "Verdú", "13579024V", "5039", "correoC2@gmail.com", Gestor.gestores.get(1)));
+    			new Cliente("Alejandro", "Planelles", "24680135G", "1234", "correoC1@gmail.com", Gestor.gestores.get(0)),
+    			new Cliente("María", "Verdú", "13579024V", "5678", "correoC2@gmail.com", Gestor.gestores.get(1)));
     	// Añadir cuentas (la cuenta se añade automáticamente a la lista del cliente)
     	Collections.addAll(Cuenta.cuentas, new Cuenta(Cliente.clientes.get(0)), new Cuenta(Cliente.clientes.get(0)),
     			new Cuenta(Cliente.clientes.get(1)));
