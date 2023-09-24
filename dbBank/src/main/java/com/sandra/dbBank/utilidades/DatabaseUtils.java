@@ -1,5 +1,6 @@
 package com.sandra.dbBank.utilidades;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -135,10 +136,10 @@ public class DatabaseUtils {
 				case "mensaje" -> dato = (T) new Mensaje(rs.getInt("id"), rs.getInt("gestor") == 0 ? null : new Gestor(rs.getInt("gestor")),
 						new Cliente(rs.getInt("cliente")), rs.getString("concepto"), rs.getString("texto"),
 						rs.getTimestamp("fecha").toLocalDateTime(), rs.getInt("leido") != 0);
-				case "cuenta" -> dato = (T) new Cuenta(rs.getInt("id"), new Cliente(rs.getInt("cliente")), rs.getDouble("saldo"));
+				case "cuenta" -> dato = (T) new Cuenta(rs.getInt("id"), new Cliente(rs.getInt("cliente")), new BigDecimal(rs.getDouble("saldo")));
 				case "transferencia" -> dato = (T) new Transferencia(rs.getInt("id"),
 						rs.getInt("ordenante") == 0 ? null : new Cuenta(rs.getInt("ordenante")),
-						rs.getInt("beneficiario") == 0 ? null : new Cuenta(rs.getInt("beneficiario")), rs.getDouble("importe"),
+						rs.getInt("beneficiario") == 0 ? null : new Cuenta(rs.getInt("beneficiario")), new BigDecimal(rs.getDouble("importe")),
 						rs.getString("concepto"), rs.getTimestamp("fecha").toLocalDateTime());
 			}
 		} catch (SQLException e) {
@@ -306,8 +307,8 @@ public class DatabaseUtils {
 				String sql = "INSERT INTO transferencia (ordenante, beneficiario, importe, concepto)VALUES(?, ?, ?, ?)";
 				List<Object> param_insert = new ArrayList<>(Arrays.asList(ordenante.getId(), beneficiaria.getId(), t.getImporte(), t.getConcepto()));
 				if (psDML(sql, param_insert) == -1) return false;
-				ordenante.setSaldo(ordenante.getSaldo() - t.getImporte());
-				beneficiaria.setSaldo(beneficiaria.getSaldo() + t.getImporte());
+				ordenante.setSaldo(ordenante.getSaldo().subtract(t.getImporte()));
+				beneficiaria.setSaldo(beneficiaria.getSaldo().add(t.getImporte()));
 				List<Object> param_up_ord = new ArrayList<>(Arrays.asList(ordenante.getSaldo(), ordenante.getId()));
 				List<Object> param_up_ben = new ArrayList<>(Arrays.asList(beneficiaria.getSaldo(), beneficiaria.getId()));
 				if (psDML("UPDATE cuenta SET saldo = ? WHERE id = ?", param_up_ord) == -1) return false;

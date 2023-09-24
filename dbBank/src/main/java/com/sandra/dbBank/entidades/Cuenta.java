@@ -1,5 +1,6 @@
 package com.sandra.dbBank.entidades;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import lombok.Getter;
@@ -10,21 +11,21 @@ public class Cuenta {
 	
 	private Integer id;
 	private Cliente cliente;
-	private double saldo;
+	private BigDecimal saldo;
 	
 	public Cuenta(Integer id) {
 		this.id = id;
 		this.cliente = null;
-		this.saldo = 1000;
+		this.saldo = new BigDecimal(1000.00);
 	}
 	
 	public Cuenta(Cliente cliente) {
 		this.id = null;
 		this.cliente = cliente;
-		this.saldo = 1000;
+		this.saldo = new BigDecimal(1000.00);
 	}
 	
-	public Cuenta(Integer id, Cliente cliente, double saldo) {
+	public Cuenta(Integer id, Cliente cliente, BigDecimal saldo) {
 		this.id = id;
 		this.cliente = cliente;
 		this.saldo = saldo;

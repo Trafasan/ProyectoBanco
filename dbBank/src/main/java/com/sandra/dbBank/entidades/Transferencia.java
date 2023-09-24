@@ -1,5 +1,6 @@
 package com.sandra.dbBank.entidades;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
@@ -13,11 +14,11 @@ public class Transferencia {
 	private Integer id;
 	private Cuenta cuenta_ordenante;
 	private Cuenta cuenta_beneficiaria;
-	private double importe;
+	private BigDecimal importe;
 	private String concepto;
 	private LocalDateTime fecha;
 
-	public Transferencia(Cuenta cuenta_ordenante, Cuenta cuenta_beneficiaria, double importe, String concepto) {
+	public Transferencia(Cuenta cuenta_ordenante, Cuenta cuenta_beneficiaria, BigDecimal importe, String concepto) {
 		this.id = null;
 		this.cuenta_ordenante = cuenta_ordenante;
 		this.cuenta_beneficiaria = cuenta_beneficiaria;
@@ -26,7 +27,7 @@ public class Transferencia {
 		this.fecha = LocalDateTime.now();
 	}
 
-	public Transferencia(Integer id, Cuenta cuenta_ordenante, Cuenta cuenta_beneficiaria, double importe, String concepto, LocalDateTime fecha) {
+	public Transferencia(Integer id, Cuenta cuenta_ordenante, Cuenta cuenta_beneficiaria, BigDecimal importe, String concepto, LocalDateTime fecha) {
 		this.id = id;
 		this.cuenta_ordenante = cuenta_ordenante;
 		this.cuenta_beneficiaria = cuenta_beneficiaria;

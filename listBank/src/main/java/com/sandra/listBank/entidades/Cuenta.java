@@ -1,5 +1,6 @@
 package com.sandra.listBank.entidades;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class Cuenta {
 	
 	private int id;
 	private Cliente cliente;
-	private double saldo;
+	private BigDecimal saldo;
 	{
 		cuentasCreadas++;
 	}
@@ -21,11 +22,11 @@ public class Cuenta {
 	public Cuenta(Cliente cliente) {
 		this.id = cuentasCreadas;
 		this.cliente = cliente;
-		this.saldo = 1000;
+		this.saldo = new BigDecimal(1000.00);
 		cliente.getCuentas().add(this);
 	}
 
-	public void setSaldo(double saldo) {
+	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
 	}
 

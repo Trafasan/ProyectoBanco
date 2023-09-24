@@ -1,5 +1,6 @@
 package com.sandra.listBank.entidades;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -43,7 +44,7 @@ public class Cliente extends Persona {
 		return super.toString()+String.format("""
 				· Gestor: %s %s
 				· Saldo total: %.2f€
-				""", gestor.getNombre(), gestor.getApellido(), cuentas.stream().mapToDouble(c -> c.getSaldo()).sum());
+				""", gestor.getNombre(), gestor.getApellido(), cuentas.stream().map(Cuenta::getSaldo).reduce(BigDecimal.ZERO, BigDecimal::add));
 	}
 
 }

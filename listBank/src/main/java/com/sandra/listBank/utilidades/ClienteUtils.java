@@ -1,5 +1,6 @@
 package com.sandra.listBank.utilidades;
 
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -134,10 +135,10 @@ public class ClienteUtils {
 				Cuenta cuenta_ord = cliente.getCuentas().stream().filter(c -> c.getId() == id_ord).collect(Collectors.toList()).get(0),
 						cuenta_ben = Cuenta.cuentas.stream().filter(c -> c.getId() == id_ben).collect(Collectors.toList()).get(0);
 				System.out.print("Introduzca el importe de la transferencia: ");
-				double importe = sc.nextDouble();
+				double importe_d = sc.nextDouble();
 				sc.nextLine();
-				importe = Math.round(importe * 100) / 100;
-				if (importe > cuenta_ord.getSaldo())
+				BigDecimal importe = new BigDecimal(Math.round(importe_d * 100) / 100);
+				if (importe.compareTo(cuenta_ord.getSaldo()) == 1)
 					System.err.println("No se pudo realizar la transferencia ya que el importe es mayor que el saldo de la cuenta seleccionada");
 				else {
 					boolean confirmacion = JOptionPane.showConfirmDialog(null, "¿Quiere introducir un concepto a la transferencia?",

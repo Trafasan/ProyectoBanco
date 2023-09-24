@@ -1,5 +1,6 @@
 package com.sandra.listBank;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 
 import com.sandra.listBank.entidades.Cliente;
@@ -22,15 +23,15 @@ public class App {
     	// Añadir cuentas (la cuenta se añade automáticamente a la lista del cliente)
     	Collections.addAll(Cuenta.cuentas, new Cuenta(Cliente.clientes.get(0)), new Cuenta(Cliente.clientes.get(0)),
     			new Cuenta(Cliente.clientes.get(1)));
-    	Cuenta.cuentas.get(1).setSaldo(2500);
+    	Cuenta.cuentas.get(1).setSaldo(new BigDecimal(2500.00));
     	// Añadir mensajes (los mensajes se añaden automáticamente a la lista de mensajes del gestor y del cliente)
     	new Mensaje(Gestor.gestores.get(0), Cliente.clientes.get(0)).setLeido(true);
     	new Mensaje(Gestor.gestores.get(1), Cliente.clientes.get(1)).setLeido(true);
     	new Mensaje(Gestor.gestores.get(0), Cliente.clientes.get(0));
     	/* Añadir transferencias (las transferencias se añaden automáticamente a la lista de ambos clientes
     	 * (solo se añade una vez si el cliente es el mismo y se actualizan automáticamente los saldos de las cuentas) */
-    	new Transferencia(Cuenta.cuentas.get(1), Cuenta.cuentas.get(0), 500, "Prueba de transferencia");
-    	new Transferencia(Cuenta.cuentas.get(1), Cuenta.cuentas.get(2), 500, "Prueba de transferencia");
+    	new Transferencia(Cuenta.cuentas.get(1), Cuenta.cuentas.get(0), new BigDecimal(500.00), "Prueba de transferencia");
+    	new Transferencia(Cuenta.cuentas.get(1), Cuenta.cuentas.get(2), new BigDecimal(500.00), "Prueba de transferencia");
 	}
 	
     public static void main(String[] args) {
